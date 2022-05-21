@@ -1,0 +1,58 @@
+@layout('layouts/auth')
+@set('title','Hello')
+
+@section('body')
+<main class="px-5 mt-10">
+    <div class="bg-base-400 w-full">
+        <div class="title flex justify-between">
+            <h3>ຫ້ອງພັກ</h3>
+            <label for="Mroom" class="btn modal-button">ເພີ່ມຫ້ອງ</label>
+        </div>
+        <div class="content">
+            <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                <div class="form-control w-full">
+                    <label class="label">
+                      <span class="label-text">ຊື່ແທ້ <abbr title="required">*</abbr></span>
+                    </label>
+                    <input type="text" name="building" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full max-w-xs" />
+                    {{--  <label class="label">
+                      <span class="label-text-alt">Alt label</span>
+                    </label>  --}}
+                </div>
+                <div class="form-control w-full">
+                    <label class="label">
+                      <span class="label-text">ນາມສະກຸນ <abbr title="required">*</abbr></span>
+                    </label>
+                    <input type="text" name="floor" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full max-w-xs" />
+                    {{--  <label class="label">
+                      <span class="label-text-alt">Alt label</span>
+                    </label>  --}}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+@endsection
+@section('scripts')
+<script>
+    function SaveRoom() {
+        const data = document.roomfm
+        var dataform = new FormData(data);
+        let url = '/v1/rooms';
+        var xmlhr = new XMLHttpRequest();
+        xmlhr.open("POST", url);
+        xmlhr.send(dataform);
+        
+        xmlhr.onreadystatechange = function() {
+            if (xmlhr.readyState === 4) {
+                var response = JSON.parse(xmlhr.responseText);
+                if (xmlhr.status === 200) {
+                    document.getElementById('MroomType').value = false
+                } else {
+                    console.log('failed');
+                }
+            }
+        }
+    }
+</script>
+@endsection

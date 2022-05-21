@@ -1,0 +1,174 @@
+@layout('layouts/auth')
+@set('title','Hello')
+
+@section('body')
+<main class="px-5 mt-10">
+    <div class="bg-base-400 w-full">
+        <div class="title flex justify-between">
+            <h3>ຫ້ອງພັກ</h3>
+            <label for="Mroom" class="btn modal-button">ເພີ່ມຫ້ອງ</label>
+        </div>
+        <div class="content">
+            <div class="overflow-x-auto">
+                <table class="table table-compact w-full">
+                  <thead>
+                    <tr>
+                        <th>ເລກທີຫ້ອງ</th>
+                        <th>ປະເພດຫ້ອງ</th>
+                        <th>ຕຶກ/ຊັ້ນ</th>
+                        <th>ລາຄາ</th>
+                        <th>ຄຳອະບາຍ</th>
+                        <th>ສະຖານະ</th>
+                        <th>ໝາຍເຫດ</th>
+                    </tr>
+                  </thead> 
+                  <tbody>
+                    <tr>
+                        <td colspan="7">ຍັງບໍ່ມີລາຍການ</td>
+                    </tr>
+                    @each((it,i) in rsRoom)
+                    <tr>
+                      <th>{{i+1}}</th> 
+                      <td>{{it.room_num}}</td>
+                      <td>{{it.roomType.title}}</td>
+                      <td>{{it.building}}/{{it.floor}}</td>
+                      <td>{{String(it.price).replace(/(.)(?=(\d{3})+$)/g,'$1,')}} ກີບ</td>
+                      <td>{{it.roomType.title}}</td>
+                      <td>{{it.roomStatus.name}}</td>
+                      <td>{{it.roomStatus.name}}</td>
+                    </tr>
+                    @endeach
+                  </tbody> 
+                  <tfoot>
+                    <tr>
+                        <th>ເລກທີຫ້ອງ</th>
+                        <th>ປະເພດຫ້ອງ</th>
+                        <th>ຕຶກ/ຊັ້ນ</th>
+                        <th>ລາຄາ</th>
+                        <th>ຄຳອະບາຍ</th>
+                        <th>ສະຖານະ</th>
+                        <th>ໝາຍເຫດ</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+        </div>
+    </div>
+</main>
+<input type="checkbox" id="Mroom" class="modal-toggle" />
+<div class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <label for="Mroom" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    <h3 class="font-bold text-lg mb-5">ເພີ່ມຫ້ອງພັກ</h3>
+    <form name="roomfm">
+    <div class="">
+        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ເລີ່ມແຕ່ໝາຍເລກ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="number" name="strfrom" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full max-w-xs" />
+                {{--  <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ຫາໝາຍເລກ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="number" name="strto" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full max-w-xs" />
+                {{--  <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+        </div>
+        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ຕຶກ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="building" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full max-w-xs" />
+                {{--  <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ຊັ້ນ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="floor" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full max-w-xs" />
+                {{--  <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+        </div>
+        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ລາຄາ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="number" name="price" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full" />
+                {{--  <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+        </div>
+        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ປະເພດຫ້ອງ <abbr title="required">*</abbr></span>
+                </label>
+                <select class="select select-bordered w-full" name="roomtype">
+                    @each(ti in rsRoomType)
+                     <option value="{{ti.rtid}}">{{ti.title}}</option>
+                    @endeach
+                 </select>
+                {{--  <label class="label"> roomtype
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ສະຖານະ <abbr title="required">*</abbr></span>
+                </label>
+               <select class="select select-bordered w-full" name="status">
+                   @each(si in rsStatus)
+                    <option value="{{si.id}}">{{si.name}}</option>
+                   @endeach
+                </select>
+                {{--  <label class="label"> status
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+        </div>
+    </form>
+    </div>
+    <div class="modal-action">
+      <button class="btn w-full" onclick="SaveRoom()">ບັນທຶກ</button>
+    </div>
+  </div>
+</div>
+@endsection
+@section('scripts')
+<script>
+    function SaveRoom() {
+        const data = document.roomfm
+        var dataform = new FormData(data);
+        let url = '/v1/rooms';
+        var xmlhr = new XMLHttpRequest();
+        xmlhr.open("POST", url);
+        xmlhr.send(dataform);
+        
+        xmlhr.onreadystatechange = function() {
+            if (xmlhr.readyState === 4) {
+                var response = JSON.parse(xmlhr.responseText);
+                if (xmlhr.status === 200) {
+                    document.getElementById('MroomType').value = false
+                } else {
+                    console.log('failed');
+                }
+            }
+        }
+    }
+</script>
+@endsection

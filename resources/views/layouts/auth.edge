@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
+  @entryPointStyles('app')
+</head>
+<body>
+  <div>
+    @!component('components/navbar/auttop')
+    <div class="flex overflow-hidden bg-white pt-16">
+      @!component('components/navbar/asidebar')
+      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
+      <div id="main-content" class="h-full w-full bg-gray-50 relative overflow-y-auto lg:ml-64">
+        @!section('body')
+      </div>
+    </div>
+  </div>
+  @!section('scripts')
+
+  <script>
+    
+  </script>
+</body>
+</html>

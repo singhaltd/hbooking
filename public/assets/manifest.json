@@ -1,0 +1,8 @@
+{
+  "assets/app.css": "http://localhost:8080/assets/app.css",
+  "assets/app.js": "http://localhost:8080/assets/app.js",
+  "assets/fonts/Roboto-Regular.woff": "http://localhost:8080/assets/fonts/Roboto-Regular.0944be10.woff",
+  "assets/fonts/Roboto-Regular.woff2": "http://localhost:8080/assets/fonts/Roboto-Regular.9d43b864.woff2",
+  "assets/fonts/Lao_SomVang.woff": "http://localhost:8080/assets/fonts/Lao_SomVang.e3e2c210.woff",
+  "assets/fonts/Lao_SomVang.woff2": "http://localhost:8080/assets/fonts/Lao_SomVang.ec7a1750.woff2"
+}

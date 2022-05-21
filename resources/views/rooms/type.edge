@@ -1,0 +1,210 @@
+@layout('layouts/auth')
+@set('title','Hello')
+
+@section('body')
+<main class="px-5 mt-10">
+    <div class="bg-base-400 w-full">
+        <div class="title flex justify-between">
+            <h3>ຈັດການປະເພດຫ້ອງພັກ</h3>
+            <label for="MroomType" class="btn modal-button">ເພີ່ມໃໝ່</label>
+        </div>
+        <div class="content">
+            <div class="overflow-x-auto">
+                <table class="table table-compact w-full">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ລະຫັດ</th>
+                            <th>ຊື່ປະເພດ</th>
+                            <th>ຄຳອະບາຍ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4">ຍັງບໍ່ມີລາຍການ</td>
+                        </tr>
+                        @each((it,i) in rsRoomType)
+                        <tr>
+                            <th>{{i+1}}</th>
+                            <td>{{it.rtid}}</td>
+                            <td>{{it.title}}</td>
+                        </tr>
+                        @endeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="mt-20"></div>
+        <div class="title flex justify-between">
+            <h3>ຈັດການສະຖານະຫ້ອງພັກ</h3>
+            <label for="MroomState" class="btn modal-button">ເພີ່ມໃໝ່</label>
+        </div>
+        <div class="content">
+            <div class="overflow-x-auto mt-5">
+                <table class="table table-compact w-full">
+                    <thead>
+                        <tr>
+                            <th>ລະຫັດ</th>
+                            <th>ສະຖານະ</th>
+                            <th>ຄຳອະບາຍ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4">ຍັງບໍ່ມີລາຍການ</td>
+                        </tr>
+                        @each(x in rsRoomStatus)
+                        <tr>
+                            <td>{{x.id}}</td>
+                            <td>{{x.name}}</td>
+                            <td>{{x.info}}</td>
+                        </tr>
+                        @endeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<input type="checkbox" id="MroomType" class="modal-toggle" />
+<div class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+        <label for="MroomType" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+        <h3 class="font-bold text-lg mb-5">ເພີ່ມປະເພດຫ້ອງພັກ</h3>
+        <form name="roomType">
+            <div class="">
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ລະຫັດ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input name="rtype" type="text" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ຫົວຂໍ້ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" name="name" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ຄຳອະບາຍ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" name="description" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="modal-action">
+            <button class="btn w-full" onclick="SaveType()">ບັນທຶກ</button>
+        </div>
+    </div>
+</div>
+
+
+<input type="checkbox" id="MroomState" class="modal-toggle" />
+<div class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+        <label for="MroomState" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+        <h3 class="font-bold text-lg mb-5">ເພີ່ມສະຖານະຫ້ອງພັກ</h3>
+        <form name="roomStatus">
+            <div class="">
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ລະຫັດ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full"
+                            name="id" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ສະຖານະ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full"
+                            name="name" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ຄຳອະບາຍ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full"
+                            name="info" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="modal-action">
+            <button class="btn w-full" onclick="SaveStatus()">ບັນທຶກ</button>
+        </div>
+    </div>
+</div>
+@endsection
+@section('scripts')
+<script>
+    function SaveType() {
+        const data = document.roomType
+        var dataform = new FormData(data);
+        let url = '/v1/rooms/type';
+        var xmlhr = new XMLHttpRequest();
+        xmlhr.open("POST", url);
+        xmlhr.send(dataform);
+        
+        xmlhr.onreadystatechange = function() {
+            if (xmlhr.readyState === 4) {
+                var response = JSON.parse(xmlhr.responseText);
+                if (xmlhr.status === 200) {
+                    document.getElementById('MroomType').value = false
+                } else {
+                    console.log('failed');
+                }
+            }
+        }
+    }
+    function SaveStatus() {
+        const data = document.roomStatus
+        var dataform = new FormData(data);
+        let url = '/v1/rooms/status';
+        var xmlhr = new XMLHttpRequest();
+        xmlhr.open("POST", url);
+        xmlhr.send(dataform);
+        
+        xmlhr.onreadystatechange = function() {
+            if (xmlhr.readyState === 4) {
+                var response = JSON.parse(xmlhr.responseText);
+                if (xmlhr.status === 200) {
+                    document.getElementById('MroomStatus').value = false
+                } else {
+                    console.log('failed');
+                }
+            }
+        }
+    }
+</script>
+@endsection
