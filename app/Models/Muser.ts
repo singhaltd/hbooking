@@ -1,15 +1,23 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
-
+import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
+import Hash from '@ioc:Adonis/Core/Hash'
 export default class Muser extends BaseModel {
+  public static table = 'users'
   @column({ isPrimary: true })
   public id: number
+  @column()
   public fname: string
+  @column()
   public lname: string
+  @column()
   public username: string
+  @column()
   public mobile: string
+  @column()
   public email: string
-  public passowrd: string
+  @column()
+  public password: string
+  @column()
   public rememberMeToken: string
 
   @column.dateTime({ autoCreate: true })
@@ -17,4 +25,14 @@ export default class Muser extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @beforeSave()
+  public static async hashPassword(user: Muser) {
+    if (user.$dirty.password) {
+      user.password = await Hash.make(user.password)
+    }
+    if(!user.$dirty.username){
+      user.username =  Math.random().toString(16).substr(2, 8)
+    }
+  }
 }

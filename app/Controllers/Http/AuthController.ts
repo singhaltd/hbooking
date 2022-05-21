@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import MMenu from 'App/Models/MMenu'
 import Muser from 'App/Models/Muser'
 import SignInValidator from 'App/Validators/SignInValidator'
 import SignUpValidator from 'App/Validators/SignUpValidator'
@@ -16,16 +17,11 @@ export default class AuthController {
     }
 
 
-    public async singup({ request, response, auth, session }: HttpContextContract) {
-        const data = await request.validate(SignUpValidator)
-        const user = await Muser.create(data)
-
+    public async singup({ request, response, auth, session }) {
+        const user = await Muser.create(request.all())
         await auth.login(user)
-    console.log('asfasfs')
-
-        // session.flash('success', 'Welcome to Jagr!')
-
-        // return response.redirect('/')
+        session.flash('success', 'Welcome to Jagr!')
+        return response.redirect('/')
     }
 
     public async signin({ request, response, auth, session }: HttpContextContract) {
@@ -36,7 +32,7 @@ export default class AuthController {
         //     session.flash('error', 'Your account has been locked due to repeated bad login attempts. Please reset your password.')
         //     return response.redirect('/forgot-password')
         // }
-        console.log('asfasfs')
+
         try {
             await auth.attempt(username, password, remember_me)
             // await AuthAttemptService.deleteBadAttempts(uid)
@@ -60,4 +56,9 @@ export default class AuthController {
         return response.redirect('/')
     }
     /// api
+
+
+    public async getmenu({ request, auth }: HttpContextContract) {
+        return await MMenu.all()
+    }
 }
