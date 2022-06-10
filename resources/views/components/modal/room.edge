@@ -1,0 +1,85 @@
+<input type="checkbox" id="EMroom" class="modal-toggle" checked />
+<div class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <label for="EMroom" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    <h3 class="font-bold text-lg mb-5">ແກ້ໄຂຫ້ອງພັກ</h3>
+    <form name="roomfmEdit">
+    <div class="">
+        <input type="hidden" name="ftype" value="update">
+        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ເລກທີຫ້ອງ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="room_num" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full" value="{{Room.room_num}}" />
+                {{--  <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+        </div>
+        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ຕຶກ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="building" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full max-w-xs" value="{{Room.building}}" />
+                {{--  <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ຊັ້ນ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="floor" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full max-w-xs" value="{{Room.floor}}" />
+                {{--  <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+        </div>
+        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ລາຄາ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="number" name="price" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full" value="{{Room.price}}"/>
+                {{--  <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+        </div>
+        <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ປະເພດຫ້ອງ <abbr title="required">*</abbr></span>
+                </label>
+                <select class="select select-bordered w-full" name="roomtype">
+                    @each(ti in rsRoomType)
+                     <option value="{{ti.rtid}}"  {{(Room.rtype == ti.rtid ? 'selected':'')}}>{{ti.title}}</option>
+                    @endeach
+                 </select>
+                {{--  <label class="label"> roomtype
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+            <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ສະຖານະ <abbr title="required">*</abbr></span>
+                </label>
+               <select class="select select-bordered w-full" name="status">
+                   @each(si in rsStatus)
+                    <option value="{{si.id}}" {{(Room.status == si.id ? 'selected':'')}}>{{si.name}}</option>
+                   @endeach
+                </select>
+                {{--  <label class="label"> status
+                  <span class="label-text-alt">Alt label</span>
+                </label>  --}}
+            </div>
+        </div>
+    </form>
+    </div>
+    <div class="modal-action">
+      <button class="btn w-full" onclick="SaveRoom('update')">ບັນທຶກ</button>
+    </div>
+  </div>
+</div>

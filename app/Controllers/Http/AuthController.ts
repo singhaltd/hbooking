@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import MMenu from 'App/Models/MMenu'
 import Muser from 'App/Models/Muser'
 import SignInValidator from 'App/Validators/SignInValidator'
@@ -6,7 +7,7 @@ import SignUpValidator from 'App/Validators/SignUpValidator'
 
 export default class AuthController {
 
-    public async dashboard({ view }) {
+    public async dashboard({ view, auth, session }:HttpContextContract) {
         return view.render('dashboard')
     }
     public async login({ view }: HttpContextContract) {
@@ -17,15 +18,16 @@ export default class AuthController {
     }
 
 
-    public async singup({ request, response, auth, session }) {
+    public async singup({ request, response, auth, session }:HttpContextContract) {
         const user = await Muser.create(request.all())
         await auth.login(user)
-        session.flash('success', 'Welcome to Jagr!')
+        session.flash({ notification: "Logged in successfully" });
         return response.redirect('/')
     }
 
     public async signin({ request, response, auth, session }: HttpContextContract) {
-        const { username, password, remember_me } = await request.validate(SignInValidator)
+        const {username,password,remember_me} = request.all()
+        // const { username, password, remember_me } = await request.validate(SignInValidator)
 
         // const loginAttemptsRemaining = await AuthAttemptService.getRemainingAttempts(username)
         // if (loginAttemptsRemaining <= 0) {
@@ -34,12 +36,15 @@ export default class AuthController {
         // }
 
         try {
-            await auth.attempt(username, password, remember_me)
+            // await auth.attempt(username, password)
+            await auth.use('web').attempt(username, password)
+            response.redirect('/')
             // await AuthAttemptService.deleteBadAttempts(uid)
         } catch (error) {
+            console.log(error)
             // await AuthAttemptService.recordLoginAttempt(uid)
 
-            session.flash('errors', { form: 'The provided username/email or password is incorrect' })
+            session.flash('errors', { form: 'ຊື່ຜູ້ໃຊ້ງານ ແລະ ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ' })
             return response.redirect().back()
         }
 
@@ -58,7 +63,16 @@ export default class AuthController {
     /// api
 
 
-    public async getmenu({ request, auth }: HttpContextContract) {
-        return await MMenu.all()
+    public async getmenu({ request,view, auth }: HttpContextContract) {
+        try{
+            const user = await auth.use('web').user
+            const resMenu = await Database.rawQuery(`select n.* from user_role_mapings m, menus n where n.id = m.menu_id and m.role_id = ${user?.role}`)
+            return view.render('components/navbar/asidebar', {
+                    resMenu
+            })
+        }catch(e){
+            console.log(e)
+        }
+       
     }
 }

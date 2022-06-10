@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeSave, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Hash from '@ioc:Adonis/Core/Hash'
+import MuRole from './MuRole'
 export default class Muser extends BaseModel {
   public static table = 'users'
   @column({ isPrimary: true })
@@ -19,6 +20,8 @@ export default class Muser extends BaseModel {
   public password: string
   @column()
   public rememberMeToken: string
+  @column()
+  public role: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -31,8 +34,14 @@ export default class Muser extends BaseModel {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }
-    if(!user.$dirty.username){
-      user.username =  Math.random().toString(16).substr(2, 8)
+    if (!user.$dirty.username) {
+      user.username = Math.random().toString(16).substr(2, 8)
     }
   }
+
+  @hasOne(() => MuRole, {
+    localKey: 'role',
+    foreignKey: 'id'
+  })
+  public urole: HasOne<typeof MuRole>
 }

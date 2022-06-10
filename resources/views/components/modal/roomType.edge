@@ -1,0 +1,48 @@
+<input type="checkbox" id="typeEdit" class="modal-toggle"  checked/>
+<div class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+        <label for="typeEdit" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+        <h3 class="font-bold text-lg mb-5">ເພີ່ມປະເພດຫ້ອງພັກ</h3>
+        <form name="TypeUpdate">
+            <input type="hidden" name="ftype" value="update">
+            <div class="">
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ລະຫັດ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input name="rtype" type="text" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full" value="{{rsType.rtid}}" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ຫົວຂໍ້ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" name="name" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full" value="{{rsType.title}}" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ຄຳອະບາຍ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" name="description" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full" value="{{rsType.description}}" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="modal-action">
+            <button class="btn w-full" onclick="SaveUpdateType()">ບັນທຶກ</button>
+        </div>
+    </div>
+</div>

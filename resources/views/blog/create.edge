@@ -1,0 +1,82 @@
+@layout('layouts/auth')
+@set('title','Hello')
+
+@section('body')
+<main class="px-5 mt-10">
+    <form action="{{route('api.blog.store')}}" method="POST" enctype="multipart/form-data">
+        <div class="bg-base-400 w-full">
+            <div class="title flex justify-between">
+                <h3>ສ້າງເນືອຫາ</h3>
+                <button type="submit" class="btn modal-button">ບັນທຶກ</button>
+            </div>
+            <div class="content">
+                <div class="grid grid-cols-1 space-y-2">
+                    <label class="text-sm font-bold text-gray-500 tracking-wide">ຫົວຂໍ້</label>
+                    <input
+                        class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                        type="text" name="title">
+                </div>
+                <div class="grid grid-cols-1 space-y-2">
+                    <label class="text-sm font-bold text-gray-500 tracking-wide">ຮູບພາບ</label>
+                    <div class="flex items-center justify-center w-full">
+                        <label
+                            class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
+                            <div
+                                class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
+                                <div class="flex flex-auto max-h-48 w-2/5 mx-auto -mt-10">
+                                    <img class="has-mask h-36 object-center"
+                                        src="https://img.freepik.com/free-vector/image-upload-concept-landing-page_52683-27130.jpg?size=338&ext=jpg"
+                                        alt="freepik image">
+                                </div>
+                                <p class="pointer-none text-gray-500 "><span class="text-sm">Drag and drop</span> files
+                                    here <br /> or <a href="" id="" class="text-blue-600 hover:underline">select a
+                                        file</a> from your computer</p>
+                            </div>
+                            <input type="file" name="cover_image" class="hidden">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-control w-full">
+                    <label class="label">
+                        <span class="label-text">ເນື້ອຫາ <abbr title="required">*</abbr></span>
+                    </label>
+                    <textarea class="textarea textarea-bordered" name="body"></textarea>
+                </div>
+                <div class="form-control w-full">
+                    <label class="label">
+                        <span class="label-text">ປະເພດ <abbr title="required">*</abbr></span>
+                    </label>
+                    <select class="select select-bordered select-sm w-full" name="con_type">
+                        <option value="SLI" selected>ຮູບສະໄລ້</option>
+                        <option value="BLG">ຂ່າວສານ</option>
+                        <option value="PUP">Popup</option>
+                    </select>
+                    {{-- <label class="label"> status
+                        <span class="label-text-alt">Alt label</span>
+                    </label> --}}
+                </div>
+                <div class="form-control w-full">
+                    <label class="label">
+                        <span class="label-text">ເນື້ອຫາ <abbr title="required">*</abbr></span>
+                    </label>
+                    <select class="select select-bordered select-sm w-full" name="stat">
+                        <option value="true" selected>ເປີດສາທາລະນາ</option>
+                        <option value="false">ເກັບໄວ້ກ່ອນ</option>
+                    </select>
+                    {{-- <label class="label"> status
+                        <span class="label-text-alt">Alt label</span>
+                    </label> --}}
+                </div>
+
+
+            </div>
+    </form>
+    </div>
+</main>
+@endsection
+@section('scripts')
+<script>
+    
+</script>
+@endsection

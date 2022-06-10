@@ -1,0 +1,51 @@
+<input type="checkbox" id="MroomStateUpdate" class="modal-toggle" checked />
+<div class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+        <label for="MroomStateUpdate" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+        <h3 class="font-bold text-lg mb-5">ແກ້ໄຂສະຖານະຫ້ອງພັກ</h3>
+        <form name="StatusSaveUpdate">
+            <div class="">
+                <input type="hidden" name="ftype" value="update">
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ລະຫັດ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full"
+                            name="id" value="{{rstatus.id}}" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ສະຖານະ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full"
+                            name="name" value="{{rstatus.name}}" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+                <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+                    <div class="form-control w-full">
+                        <label class="label">
+                            <span class="label-text">ຄຳອະບາຍ <abbr title="required">*</abbr></span>
+                        </label>
+                        <input type="text" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ" class="input input-bordered w-full"
+                            name="info" value="{{rstatus.info}}" />
+                        {{-- <label class="label">
+                            <span class="label-text-alt">Alt label</span>
+                        </label> --}}
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="modal-action">
+            <button class="btn w-full" onclick="updateStatus()">ບັນທຶກ</button>
+        </div>
+    </div>
+</div>

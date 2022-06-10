@@ -1,0 +1,300 @@
+@layout('layouts/auth')
+@set('title','Hello')
+
+@section('body')
+<main class="px-5 mt-10">
+  <form action="{{route('api.booking.store')}}" method="POST">
+  <div class="bg-base-400 w-full">
+    <div class="title flex justify-between">
+      <h3>ລາຍການການຈອງ</h3>
+      <button  type="submit" class="btn modal-button">ບັນທຶກ</button>
+    </div>
+    <div class="content">
+      
+        <div class="">
+          <fieldset class="border p-3">
+            <legend>ຂໍ້ມູນລູກຄ້າ</legend>
+            <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ຊື່ແທ້ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="fname"
+                  class="input input-bordered w-full input-sm" />
+                {{-- <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ນາມສະກຸນ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="lname"
+                  class="input input-bordered w-full input-sm" />
+                {{-- <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ເພດ <abbr title="required">*</abbr></span>
+                </label>
+                <div class="gender flex border rounded text-gray-500">
+                  <label class="flex items-center cursor-pointer m-2">
+                    <input class="radio" type="radio" name="sex" value="M" checked>
+                    <div class="title ml-3">ຊາຍ</div>
+                  </label>
+    
+                  <label class="flex items-center cursor-pointer m-2">
+                    <input class="radio" type="radio" name="sex" value="F">
+                    <div class="title ml-3">ຍິງ</div>
+                  </label>
+                </div>
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ວັນທີ.ເດືອນ.ປີເກີດ</span>
+                </label>
+                <input type="date" name="dob"
+                  class="input input-bordered w-full input-sm" />
+                {{-- <label class="label">
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ປະເທດ <abbr title="required">*</abbr></span>
+                </label>
+                <select class="select select-bordered w-full select-sm" id="selCountry">
+                  @each(ti in rsCountries)
+                  <option value="{{ti.id}}">{{ti.name}}</option>
+                  @endeach
+                </select>
+                {{-- <label class="label"> roomtype
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ແຂວງ <abbr title="required">*</abbr></span>
+                </label>
+                <select class="select select-bordered select-sm w-full" id="selProvince">
+                
+                </select>
+                {{-- <label class="label"> status
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+            </div>
+            <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ເມືອງ <abbr title="required">*</abbr></span>
+                </label>
+                <select class="select select-bordered w-full select-sm" id="selDistrict">
+          
+                </select>
+                {{-- <label class="label"> roomtype
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ບ້ານ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="village"
+                  class="input input-bordered w-full input-sm" />
+                {{-- <label class="label"> status
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ປະເພດເອກະສານ <abbr title="required">*</abbr></span>
+                </label>
+                <select class="select select-bordered w-full select-sm" name="doc_type" id="">
+                  <option value="PERSONAL_CARD" selected>ບັດປະຈຳໂຕ</option>
+                  <option value="PASSPORT">ໜັງສືຜ່ານແດນ</option>
+                  <option value="FAMMILY_BOOK">ສຳມະໂນຄົວ</option>
+                </select>
+                {{-- <label class="label"> roomtype
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ເລກທີເອກະສານ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="doc_no"
+                  class="input input-bordered w-full input-sm" />
+                {{-- <label class="label"> status
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ເບີໂທ <abbr title="required">*</abbr></span>
+                </label>
+                <input type="text" name="mobile"
+                  class="input input-bordered w-full input-sm" />
+                {{-- <label class="label"> status
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">ອິເມວ໌</span>
+                </label>
+                <input type="text" name="email"
+                  class="input input-bordered w-full input-sm" />
+                {{-- <label class="label"> status
+                  <span class="label-text-alt">Alt label</span>
+                </label> --}}
+              </div>
+            </div>
+          </fieldset>
+          <div class="grid grid-cols-2">
+            <div>
+              <fieldset class="border p-5">
+                <legend>ຂໍ້ມູນການຈອງ</legend>
+                <div class="md:flex flex-row w-full text-xs gap-2">
+                    <div class="form-control w-full">
+                      <label class="label">
+                        <span class="label-text">ຈຳນວນຫ້ອງ <abbr title="required">*</abbr></span>
+                      </label>
+                      <input type="email" name="rqty"
+                        class="input input-bordered w-full input-sm" />
+                      {{-- <label class="label">
+                        <span class="label-text-alt">Alt label</span>
+                      </label> --}}
+                    </div>
+                    <div class="form-control w-full">
+                      <label class="label">
+                        <span class="label-text">ຜູ້ໃຫຍ່ <abbr title="required">*</abbr></span>
+                      </label>
+                      <input type="email" name="adulth"
+                        class="input input-bordered w-full input-sm" />
+                      {{-- <label class="label">
+                        <span class="label-text-alt">Alt label</span>
+                      </label> --}}
+                    </div>
+                </div>
+                <div class="md:flex flex-row w-full text-xs">
+                  <div class="form-control w-full">
+                    <label class="label">
+                      <span class="label-text">ເດັກນ້ອຍ <abbr title="required">*</abbr></span>
+                    </label>
+                    <input type="email" name="child"
+                      class="input input-bordered w-full input-sm" />
+                    {{-- <label class="label">
+                      <span class="label-text-alt">Alt label</span>
+                    </label> --}}
+                  </div>
+                  <div class="form-control w-full">
+                    <label class="label">
+                      <span class="label-text">ຊື່ຜູ້ໃຊ້ລະບົບ <abbr title="required">*</abbr></span>
+                    </label>
+                    <input type="email" name="building" placeholder="ປ້ອນອີເມວ໌ ຫຼື ເບີໂທ"
+                      class="input input-bordered w-full input-sm" />
+                    {{-- <label class="label">
+                      <span class="label-text-alt">Alt label</span>
+                    </label> --}}
+                  </div>
+              </div>
+              </fieldset>
+            </div>
+            <div>
+              <fieldset class="border p-5">
+                <legend>ປະເພດການຈອງ</legend>
+                <div class="form-control w-full">
+                  <div class="gender flex border rounded text-gray-500">
+                    <label class="flex items-center cursor-pointer m-2">
+                      <input class="radio" type="radio" name="type_book" value="W" checked>
+                      <div class="title ml-3">Walk In</div>
+                    </label>
+      
+                    <label class="flex items-center cursor-pointer m-2">
+                      <input class="radio" type="radio" name="type_book" value="M">
+                      <div class="title ml-3">Mobile App</div>
+                    </label>
+                    <label class="flex items-center cursor-pointer m-2">
+                      <input class="radio" type="radio" name="type_book" value="O">
+                      <div class="title ml-3">ອື່ນໆ</div>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="border p-5">
+                <legend>ວັນທີເຂົ້າ ແລະ ອອກ</legend>
+                <div class="form-control w-full">
+                  <div class="gender flex border rounded text-gray-500">
+                    <label class="flex items-center cursor-pointer m-2">
+                      <input class="radio" type="radio" name="gender" value="M" checked>
+                      <div class="title ml-3">Walk In</div>
+                    </label>
+      
+                    <label class="flex items-center cursor-pointer m-2">
+                      <input class="radio" type="radio" name="gender" value="F">
+                      <div class="title ml-3">Mobile App</div>
+                    </label>
+                    <label class="flex items-center cursor-pointer m-2">
+                      <input class="radio" type="radio" name="gender" value="F">
+                      <div class="title ml-3">ອື່ນໆ</div>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+     
+    </div>
+  </form>
+  </div>
+</main>
+@endsection
+@section('scripts')
+<script>
+  function SaveRoom() {
+    const data = document.roomfm
+    var dataform = new FormData(data);
+    let url = '/v1/rooms';
+    var xmlhr = new XMLHttpRequest();
+    xmlhr.open("POST", url);
+    xmlhr.send(dataform);
+
+    xmlhr.onreadystatechange = function () {
+      if (xmlhr.readyState === 4) {
+        var response = JSON.parse(xmlhr.responseText);
+        if (xmlhr.status === 200) {
+          document.getElementById('MroomType').checked = false
+        } else {
+          console.log('failed');
+        }
+      }
+    }
+  }
+
+
+ let elc =  document.getElementById('selCountry')
+ let elp =  document.getElementById('selProvince')
+
+ async function getProvince(str){
+  await fetch('/city/province/'+str).then(response => response.text()).then(res => {
+    document.getElementById('selProvince').innerHTML = res
+  })
+ }
+ elp.addEventListener('change',()=> {
+  getDistrict(elp.value)
+ })
+ async function getDistrict(str){
+  await fetch('/city/district/'+str).then(response => response.text()).then(res => {
+    document.getElementById('selDistrict').innerHTML = res
+  })
+ }
+ getProvince(elc.value)
+ 
+ setTimeout(()=> {
+   getDistrict(elp.value)
+ },100)
+</script>
+@endsection

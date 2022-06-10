@@ -4,11 +4,11 @@
 <div class="main w-3/12 m-auto mt-10">
   <div class="register">
     <h2 class="text-2xl mb-6">ສະມັກສະມາຊິກ</h2>
-    @if (flashMessages.get('errors.form'))
-          <div role="alert" class="bg-red-100 text-red-800 rounded p-3 mb-4">
-            {{  flashMessages.get('errors.form') }}
-          </div>
-     @endif
+    @if(old('notification'))
+    <div class="alert alert-danger">
+      {{ old('notification') }}
+    </div>
+  @endif
     <form action="{{ route('auth.signup') }}" method="POST">
       <div class="form-control w-full">
         <label class="label">
