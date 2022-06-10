@@ -1,7 +1,9 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { schema } from '@ioc:Adonis/Core/Validator'
 import MRoom from 'App/Models/MRoom'
 import MRoomStatus from 'App/Models/MRoomStatus'
 import MRoomType from 'App/Models/MRoomType'
+import Application from '@ioc:Adonis/Core/Application'
 
 export default class RoomsController {
     public async index({ view }: HttpContextContract) {
@@ -79,12 +81,29 @@ export default class RoomsController {
 
     /// room Type managerment
     public async CrateRoomType({ request, response }) {
-        const { rtype, name, description ,imagefile} = request.all()
-        const rsRoomType = await MRoomType.create({
-            rtype, name, description
-        })
-        // rsRoomType.related('thumbnail').createMany()
-        return response.json(rsRoomType)
+        const { rtype, description, name } = request.all()
+        const images = request.files('imagefile')
+        console.log(images)
+        try {
+            const files = []
+            if (images.length > 0) {
+                for (let image of images) {
+                    await image.move(Application.tmpPath('uploads/room'))
+                    // {name:,alt:,caption:,ext:,size,url:}
+                    files.push({ name: image.clientName, alt: image.clientName, caption: '', ext: '', size: image.size, url: 'uploads/room/' + image.clientName })
+
+                }
+            }
+            const rsRoomType = await MRoomType.create({
+                rtype, name, description
+            })
+            rsRoomType.related('thumbnail').createMany(files)
+            response.location('/rooms/type')
+            return response.json(rsRoomType)
+        } catch (error) {
+            console.log(error)
+        }
+
     }
     public async delRoomType({ params, response }) {
         try {
@@ -179,6 +198,15 @@ export default class RoomsController {
 
     // for mobile 
     public async clRoomType({ request, response }: HttpContextContract) {
+        const RoomType = await MRoomType.query().preload('thumbnail')
 
+        response.status(200)
+        return RoomType
+    }
+    public async clFindType({ params, response }: HttpContextContract) {
+        const RoomType = await MRoomType.query().preload('Room').preload('thumbnail').where('rtype', params.id).first()
+
+        response.status(200)
+        return RoomType
     }
 }

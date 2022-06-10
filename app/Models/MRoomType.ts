@@ -1,5 +1,6 @@
-import { BaseModel, BelongsTo, belongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import MRoom from 'App/Models/MRoomType'
+import { DateTime } from 'luxon'
 import MFile from './MFile'
 export default class MRoomType extends BaseModel {
     public static table = "room_types"
@@ -9,7 +10,11 @@ export default class MRoomType extends BaseModel {
     public title: string
     @column()
     public description: string
+    @column.dateTime({ autoCreate: true })
+    public createdAt: DateTime
 
+    @column.dateTime({ autoCreate: true, autoUpdate: true })
+    public updatedAt: DateTime
     @belongsTo(() => MRoom)
     public user: BelongsTo<typeof MRoom>
 
@@ -20,9 +25,15 @@ export default class MRoomType extends BaseModel {
     public roomType: HasMany<typeof MRoomType>
 
 
-    @hasMany(()=> MFile,{
-        localKey:'rtid',
-        foreignKey:'room_type'
+    @hasMany(() => MRoom, {
+        localKey: 'rtid',
+        foreignKey: 'rtype'
     })
-    public thumbnail:HasMany<typeof MFile>
+    public Room: HasMany<typeof MRoom>
+
+    @hasMany(() => MFile, {
+        localKey: 'rtid',
+        foreignKey: 'room_type'
+    })
+    public thumbnail: HasMany<typeof MFile>
 }

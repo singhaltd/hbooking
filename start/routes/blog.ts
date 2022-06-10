@@ -10,17 +10,18 @@ Route.group(() => {
     Route.post('', 'BlogsController.saveBlog').as('api.blog.store')
     Route.get('/list', 'BlogsController.getBlog')
     Route.get('/:id', 'BlogsController.getFindBlog')
+    Route.delete('/:id', 'BlogsController.delPost')
 }).prefix('api/blog')
 
-Route.get('file',({request,response})=> {
-    const {ffile} = request.all()
+Route.get('file', ({ request, response }) => {
+    const { ffile } = request.all()
     const filePath = Application.tmpPath(ffile)
     response.download(filePath, true, (error) => {
-    if (error.code === 'ENOENT') {
-        return ['File does not exists', 404]
-    }
+        if (error.code === 'ENOENT') {
+            return ['File does not exists', 404]
+        }
 
-    return ['Cannot download file', 400]
+        return ['Cannot download file', 400]
     })
 })
 

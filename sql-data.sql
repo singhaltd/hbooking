@@ -1,14 +1,21 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jun 10, 2022 at 01:09 AM
--- Server version: 5.7.32
--- PHP Version: 7.4.12
+-- Host: 127.0.0.1
+-- Generation Time: Jun 10, 2022 at 02:13 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `hotel1`
@@ -24,7 +31,7 @@ CREATE TABLE `adonis_schema` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
-  `migration_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `migration_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -349,11 +356,20 @@ CREATE TABLE `files` (
   `caption` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ext` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `size` float(8,2) DEFAULT NULL,
-  `url` text COLLATE utf8_unicode_ci,
+  `url` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `room_type` varchar(5) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `files`
+--
+
+INSERT INTO `files` (`id`, `name`, `alt`, `caption`, `ext`, `size`, `url`, `created_at`, `updated_at`, `room_type`) VALUES
+(7, 'urban-01.webp', 'urban-01.webp', '', '', 67402.00, 'uploads/room/urban-01.webp', '2022-06-10 07:29:23', '2022-06-10 07:29:23', 'UBC'),
+(8, 'urban-02.webp', 'urban-02.webp', '', '', 99394.00, 'uploads/room/urban-02.webp', '2022-06-10 07:29:23', '2022-06-10 07:29:23', 'UBC'),
+(9, 'urban-03.webp', 'urban-03.webp', '', '', 109120.00, 'uploads/room/urban-03.webp', '2022-06-10 07:29:23', '2022-06-10 07:29:23', 'UBC');
 
 -- --------------------------------------------------------
 
@@ -384,7 +400,9 @@ INSERT INTO `menus` (`id`, `title`, `order`, `slug`, `target`, `parent`) VALUES
 (7, 'ຈັດການຜູ້ໃຊ້ລະບົບ', 1, '', '_top', NULL),
 (8, 'ຜູ້ໃຊ້ລະບົບ', 2, '/users', '_self', 7),
 (9, 'ສິດຜູ້ໃຊ້ລະບົບ', 3, '/users/permission', '_self', 7),
-(10, 'ລາຍງານ', NULL, '/reports', '_top', NULL);
+(10, 'ລາຍງານ', NULL, '/reports', '_top', NULL),
+(11, 'ເນື້ອຫາ Mobile', NULL, '/blog', '_top', NULL),
+(12, 'ຂ່າວສານ, popup, slide', NULL, '/', '_top', 11);
 
 -- --------------------------------------------------------
 
@@ -395,7 +413,7 @@ INSERT INTO `menus` (`id`, `title`, `order`, `slug`, `target`, `parent`) VALUES
 CREATE TABLE `posts` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `body` text COLLATE utf8_unicode_ci,
+  `body` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `cover_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `con_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `stat` tinyint(1) DEFAULT NULL,
@@ -408,9 +426,27 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `title`, `body`, `cover_image`, `con_type`, `stat`, `created_at`, `updated_at`) VALUES
-(6, 'test', NULL, '/uploads/blog/24-hours.png', 'SLI', 1, '2022-06-08 15:37:50', '2022-06-08 15:37:50'),
-(7, 'slide promot', 'test', '/uploads/blog/cyber-security-global-communication-concept.jpg', 'SLI', 1, '2022-06-08 16:25:51', '2022-06-08 16:25:51'),
+(7, 'slide01', 'Hotel', '/uploads/blog/slide01.png', 'SLI', 1, '2022-06-08 16:25:51', '2022-06-08 16:25:51'),
 (8, 'slide promot', 'test', '/uploads/blog/cyber-security-global-communication-concept.jpg', 'SLI', 1, '2022-06-08 16:39:47', '2022-06-08 16:39:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts_type`
+--
+
+CREATE TABLE `posts_type` (
+  `id` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `info` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `posts_type`
+--
+
+INSERT INTO `posts_type` (`id`, `info`) VALUES
+('PUP', 'ປັອບອັບ'),
+('SLI', 'ສະໄລ້ໂຊ');
 
 -- --------------------------------------------------------
 
@@ -533,7 +569,8 @@ CREATE TABLE `room_types` (
 --
 
 INSERT INTO `room_types` (`rtype`, `name`, `description`, `created_at`, `updated_at`) VALUES
-('STBD', 'standard', NULL, NULL, NULL);
+('STBD', 'standard', NULL, NULL, NULL),
+('UBC', 'Urban Classic', NULL, '2022-06-10 07:29:23', '2022-06-10 07:29:23');
 
 -- --------------------------------------------------------
 
@@ -612,7 +649,9 @@ INSERT INTO `user_role_mapings` (`id`, `role_id`, `menu_id`, `create`, `update`,
 (7, 1, 7, 1, 1, 1),
 (8, 1, 8, 1, 1, 1),
 (9, 1, 9, 1, 1, 1),
-(10, 1, 10, 1, 1, 1);
+(10, 1, 10, 1, 1, 1),
+(11, 1, 11, 1, 1, 1),
+(12, 1, 12, 1, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -682,6 +721,12 @@ ALTER TABLE `menus`
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `posts_type`
+--
+ALTER TABLE `posts_type`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -776,13 +821,13 @@ ALTER TABLE `districts`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -824,7 +869,7 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `user_role_mapings`
 --
 ALTER TABLE `user_role_mapings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
@@ -860,3 +905,8 @@ ALTER TABLE `provinces`
 ALTER TABLE `rooms`
   ADD CONSTRAINT `rooms_room_type_foreign` FOREIGN KEY (`room_type`) REFERENCES `room_types` (`rtype`) ON DELETE CASCADE,
   ADD CONSTRAINT `rooms_status_foreign` FOREIGN KEY (`status`) REFERENCES `room_statuses` (`scode`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

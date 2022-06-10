@@ -13,7 +13,7 @@ Route.group(() => {
 Route.group(() => {
     Route.post('', 'RoomsController.store')
     Route.delete('/:id', 'RoomsController.deleteroom')
-    Route.post('type', 'RoomsController.CrateRoomType')
+    Route.post('type', 'RoomsController.CrateRoomType').as('auth.roomtype.store')
     Route.put('type', 'RoomsController.updateType')
     Route.delete('type/:id', 'RoomsController.delRoomType')
     Route.post('status', 'RoomsController.CrateRoomStatus')
@@ -22,5 +22,7 @@ Route.group(() => {
 
 
     Route.get('cltype', 'RoomsController.clRoomType')
+    Route.get('cltype/:id', 'RoomsController.clFindType')
+    Route.get('cltypeDetail/:id', 'RoomsController.clFindType')
     Route.get('cldetail/:id', 'RoomsController.delRoomStatus')
 }).prefix('v1/rooms')
