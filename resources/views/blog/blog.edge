@@ -2,11 +2,24 @@
 @set('title','Hello')
 
 @section('body')
-<main class="px-5 mt-10">
-  <div class="bg-base-400 w-full">
-    <div class="title flex justify-between">
+<main class="px-2 mt-10">
+  <div class="dark:bg-base-200 px-3 py-3 w-full rounded-3xl">
+    <div class="title flex justify-between py-3">
       <h3>ເນື້ອຫາເທິງແອັບ</h3>
-      <a href="/blog/create" class="btn">ເພີ່ມ</a>
+      <div class="flex">
+        <form class="flex border border-gray-700 rounded-lg mr-3" method="GET" action="{{route('auth.blog')}}">
+          <input
+            type="text"
+            name="search"
+            class="input w-full input-sm max-w-xs"
+            placeholder="ປ້ອນຫົວຂໍ້ການຄົ້ນຫາ..."
+          />
+          <button type="submit" class="rounded-lg btn-sm btn px-3">
+            ຄົ້ນຫາ
+          </button>
+        </form>
+        <a href="/blog/create" class="btn btn-sm">ເພີ່ມ</a>
+      </div>
     </div>
     <div class="content">
       <div class="overflow-x-auto">
@@ -21,14 +34,14 @@
             </tr>
           </thead>
           <tbody>
-            {{--  <tr class="{{rsRoom.length > 0 ? 'hidden':'block'}}">
-              <td colspan="7">ຍັງບໍ່ມີລາຍການ</td>
-          </tr>  --}}
+            <tr class="{{blog.length > 0 ? 'hidden':'block'}}">
+              <td colspan="7">ບໍ່ມີລາຍການ</td>
+          </tr>
             @each((it,i) in blog)
             <tr>
               <td>{{it.title}}</td>
               <td>{{it.ptype.info}}</td>
-              <td>{{it.createdAt}}</td>
+              <td>{{it.createdAt.toFormat('dd/mm/yyyy')}}</td>
               <td>
                 @if(it.stat)
                   <div class="badge badge-pirmary">ເປີດສາທາລະນາ</div>

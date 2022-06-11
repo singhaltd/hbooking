@@ -14,21 +14,42 @@ export default class BookingsController {
         })
     }
 
-    public async SeveBooking({ request, response }: HttpContextContract) {
-        const {email} = request.all()
+    public async SeveBooking({ request, session, response }: HttpContextContract) {
+        const { email, dob } = request.all()
         const reqCustomer = schema.create({
-            fname:schema.string(),
-            lnam:schema.string(),
-            mobile:schema.string(),
-            district_id:schema.number(),
-            vilage:schema.string(),
-            sex:schema.string(),
-            doc_type:schema.string(),
-            doc_no:schema.string()
+            fname: schema.string(),
+            lname: schema.string(),
+            mobile: schema.string(),
+            district_id: schema.number(),
+            village: schema.string(),
+            sex: schema.string(),
+            doc_type: schema.string(),
+            doc_no: schema.string()
         })
-        const paycust = await request.validate({schema:reqCustomer})
 
-        return await MCustomer.updateOrCreate(Object.assign(paycust,email),Object.assign(paycust,email))
+        const reqBooking = schema.create({
+            adulth: schema.number(),
+            child: schema.number(),
+            check_in_date: schema.date(),
+            check_out_date: schema.date(),
+            check_in_time: schema.string(),
+            check_out_time: schema.string(),
+            booktype: schema.string(),
+            rqty: schema.number(),
+        })
+        try {
+            const paycust = await request.validate({ schema: reqCustomer })
+            const payBook = await request.validate({ schema: reqBooking })
+            const data = Object.assign(paycust, { email: email, dob: dob })
+            // const customer =  await MCustomer.updateOrCreate(data, data)
+            // response.redirect('/booking')
+            console.log(payBook)
+        } catch (error) {
+            console.log(error)
+            // session.flash('errors', error)
+            return response.redirect().back()
+        }
+
 
     }
 }

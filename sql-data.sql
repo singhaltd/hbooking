@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2022 at 02:13 PM
+-- Generation Time: Jun 11, 2022 at 09:05 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -135,6 +135,21 @@ CREATE TABLE `bookings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `booking_room`
+--
+
+CREATE TABLE `booking_room` (
+  `room_num` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
+  `irate` float NOT NULL,
+  `remark` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `book_ref` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `id` int(11) NOT NULL,
+  `invoice` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `countries`
 --
 
@@ -174,6 +189,13 @@ CREATE TABLE `customers` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`cid`, `fname`, `lname`, `email`, `mobile`, `dob`, `district_id`, `village`, `doc_type`, `doc_no`, `sex`, `status`, `created_at`, `updated_at`) VALUES
+(5, 'laithong', 'singhalat', 'laithong865@gmail.com', '02055057246', NULL, 101, 'test', 'PERSONAL_CARD', 'PA00012', 'M', NULL, '2022-06-11 04:45:37', '2022-06-11 04:45:37');
 
 -- --------------------------------------------------------
 
@@ -369,7 +391,10 @@ CREATE TABLE `files` (
 INSERT INTO `files` (`id`, `name`, `alt`, `caption`, `ext`, `size`, `url`, `created_at`, `updated_at`, `room_type`) VALUES
 (7, 'urban-01.webp', 'urban-01.webp', '', '', 67402.00, 'uploads/room/urban-01.webp', '2022-06-10 07:29:23', '2022-06-10 07:29:23', 'UBC'),
 (8, 'urban-02.webp', 'urban-02.webp', '', '', 99394.00, 'uploads/room/urban-02.webp', '2022-06-10 07:29:23', '2022-06-10 07:29:23', 'UBC'),
-(9, 'urban-03.webp', 'urban-03.webp', '', '', 109120.00, 'uploads/room/urban-03.webp', '2022-06-10 07:29:23', '2022-06-10 07:29:23', 'UBC');
+(9, 'urban-03.webp', 'urban-03.webp', '', '', 109120.00, 'uploads/room/urban-03.webp', '2022-06-10 07:29:23', '2022-06-10 07:29:23', 'UBC'),
+(10, 'ud-01.webp', 'ud-01.webp', '', '', 102480.00, 'uploads/room/ud-01.webp', '2022-06-11 06:59:02', '2022-06-11 06:59:02', 'UDL'),
+(11, 'ud-02.webp', 'ud-02.webp', '', '', 102480.00, 'uploads/room/ud-02.webp', '2022-06-11 06:59:02', '2022-06-11 06:59:02', 'UDL'),
+(12, 'ud-03.webp', 'ud-03.webp', '', '', 251532.00, 'uploads/room/ud-03.webp', '2022-06-11 06:59:02', '2022-06-11 06:59:02', 'UDL');
 
 -- --------------------------------------------------------
 
@@ -570,7 +595,8 @@ CREATE TABLE `room_types` (
 
 INSERT INTO `room_types` (`rtype`, `name`, `description`, `created_at`, `updated_at`) VALUES
 ('STBD', 'standard', NULL, NULL, NULL),
-('UBC', 'Urban Classic', NULL, '2022-06-10 07:29:23', '2022-06-10 07:29:23');
+('UBC', 'Urban Classic', NULL, '2022-06-10 07:29:23', '2022-06-10 07:29:23'),
+('UDL', 'Urban Deluxe', NULL, '2022-06-11 06:59:02', '2022-06-11 06:59:02');
 
 -- --------------------------------------------------------
 
@@ -589,15 +615,21 @@ CREATE TABLE `users` (
   `remember_me_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `role` int(11) NOT NULL
+  `role` int(11) NOT NULL,
+  `district` int(11) NOT NULL,
+  `village` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `image` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `dob` date DEFAULT NULL,
+  `sex` char(1) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fname`, `lname`, `username`, `mobile`, `email`, `password`, `remember_me_token`, `created_at`, `updated_at`, `role`) VALUES
-(1, 'laithong', 'singhalat', 'dda7dd97', '55057246', 'thong@mail.com', '$argon2id$v=19$t=3,m=4096,p=1$mTPnm9BECrxZcpeDXxi3MQ$NF7dvpy9WiBTrVI8Ib+hOL04yJ4TPy/dzBnpeXtHkPI', NULL, '2022-05-21 11:35:25', '2022-05-21 11:35:25', 1);
+INSERT INTO `users` (`id`, `fname`, `lname`, `username`, `mobile`, `email`, `password`, `remember_me_token`, `created_at`, `updated_at`, `role`, `district`, `village`, `image`, `dob`, `sex`) VALUES
+(1, 'laithong', 'singhalat', 'dda7dd97', '55057246', 'thong@mail.com', '$argon2id$v=19$t=3,m=4096,p=1$mTPnm9BECrxZcpeDXxi3MQ$NF7dvpy9WiBTrVI8Ib+hOL04yJ4TPy/dzBnpeXtHkPI', NULL, '2022-05-21 11:35:25', '2022-05-21 11:35:25', 1, 0, '', '', NULL, ''),
+(5, 'laithong', 'singhalat', 'test', '02055057246', 'laithong865@gmail.com', '$argon2id$v=19$t=3,m=4096,p=1$rdppPpQC6VhhrzPDshisug$grg0p4fPWkxEOQxloAavke2v1V1HVQvJqx8s6Jv5DTc', NULL, '2022-06-11 04:23:52', '2022-06-11 04:23:52', 3, 101, 'donbung', '', '2022-06-11', 'M');
 
 -- --------------------------------------------------------
 
@@ -683,6 +715,12 @@ ALTER TABLE `auth_pages`
 ALTER TABLE `bookings`
   ADD PRIMARY KEY (`ref_id`),
   ADD UNIQUE KEY `bookings_ref_id_unique` (`ref_id`);
+
+--
+-- Indexes for table `booking_room`
+--
+ALTER TABLE `booking_room`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `countries`
@@ -806,10 +844,16 @@ ALTER TABLE `auth_pages`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `booking_room`
+--
+ALTER TABLE `booking_room`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `cid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `cid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `districts`
@@ -821,7 +865,7 @@ ALTER TABLE `districts`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -857,7 +901,7 @@ ALTER TABLE `room_facilities`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user_roles`

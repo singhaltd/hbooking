@@ -7,20 +7,20 @@
         <div class="bg-base-400 w-full">
             <div class="title flex justify-between">
                 <h3>ສ້າງເນືອຫາ</h3>
-                <button type="submit" class="btn modal-button">ບັນທຶກ</button>
+                <button type="submit" class="btn btn-sm modal-button">ບັນທຶກ</button>
             </div>
             <div class="content">
                 <div class="grid grid-cols-1 space-y-2">
-                    <label class="text-sm font-bold text-gray-500 tracking-wide">ຫົວຂໍ້</label>
+                    <label class="text-sm tracking-wide">ຫົວຂໍ້</label>
                     <input
-                        class="text-base p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                        class="input text-base input-sm p-2 border border-gray-600 rounded-lg focus:outline-none focus:border-indigo-500"
                         type="text" name="title">
                 </div>
-                <div class="grid grid-cols-1 space-y-2">
-                    <label class="text-sm font-bold text-gray-500 tracking-wide">ຮູບພາບ</label>
+                <div class="grid grid-cols-1 space-y-2 mt-2">
+                    <label class="text-sm tracking-wide">ຮູບພາບ</label>
                     <div class="flex items-center justify-center w-full">
                         <label
-                            class="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
+                            class="flex flex-col rounded-lg border-2 border-dashed border-gray-600 w-full h-40 p-10 group text-center">
                             <div id="imageView">
                                      <div
                                 class="h-full w-full text-center flex flex-col items-center justify-center items-center  ">
@@ -36,13 +36,13 @@
                     </div>
                 </div>
 
-                <div class="form-control w-full">
+                <div class="form-control w-full mt-3">
                     <label class="label">
                         <span class="label-text">ເນື້ອຫາ <abbr title="required">*</abbr></span>
                     </label>
                     <textarea class="textarea textarea-bordered" name="body"></textarea>
                 </div>
-                <div class="form-control w-full">
+                <div class="form-control w-full mt-3">
                     <label class="label">
                         <span class="label-text">ປະເພດ <abbr title="required">*</abbr></span>
                     </label>
@@ -52,7 +52,7 @@
                         <option value="PUP">Popup</option>
                     </select>
                 </div>
-                <div class="form-control w-full">
+                <div class="form-control w-full mt-3">
                     <label class="label">
                         <span class="label-text">ເນື້ອຫາ <abbr title="required">*</abbr></span>
                     </label>
@@ -67,8 +67,11 @@
 
 
             </div>
+            <div class="title flex justify-between mt-5 mb-10">
+                <h3></h3>
+                <button type="submit" class="btn btn-sm modal-button">ບັນທຶກ</button>
+            </div>
     </form>
-    </div>
 </main>
 @endsection
 @section('scripts')

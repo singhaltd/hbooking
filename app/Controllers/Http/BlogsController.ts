@@ -3,11 +3,20 @@ import { schema } from '@ioc:Adonis/Core/Validator'
 import MBlog from 'App/Models/MBlog'
 import Application from '@ioc:Adonis/Core/Application'
 export default class BlogsController {
-    public async index({ view }: HttpContextContract) {
-        const blog = await MBlog.query().preload('ptype')
-        return view.render('blog/blog', {
-            blog
-        })
+    public async index({ request, session, view }: HttpContextContract) {
+        const { search } = request.all()
+        if (search) {
+            const blog = await MBlog.query().preload('ptype').where('title', 'like', `%${search}%`)
+            return view.render('blog/blog', {
+                blog
+            })
+        } else {
+            const blog = await MBlog.query().preload('ptype')
+            return view.render('blog/blog', {
+                blog
+            })
+        }
+
 
     }
     public async create({ view }: HttpContextContract) {

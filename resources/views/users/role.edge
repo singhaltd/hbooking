@@ -5,55 +5,35 @@
 <main class="px-5 mt-10">
   <div class="bg-base-400 w-full">
     <div class="title flex justify-between">
-      <h3>ຈັດການຜູ້ໃຊ້ລະບົບ</h3>
-      <label for="Mroom" class="btn modal-button">ເພີ່ມໃໝ່</label>
+      <h3 class="py-3">ສິດຜູ້ໃຊ້ລະບົບ</h3>
     </div>
     <div class="content">
-        <div class="tabs">
-            <a class="tab tab-sm tab-lifted">ສິດຜູ້ໃຊ້ລະບົບ</a> 
-            <a class="tab tab-sm tab-lifted tab-active">ຕັ້ງຄ່າສິດຜູ້ໃຊ້ລະບົບ</a>
-        </div>
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto mt-2">
         <table class="table table-compact w-full">
           <thead>
             <tr>
-              <th>ຊື່ ແລະ ນາມສະກຸນ</th>
-              <th>ຊື່ຜູ້ໃຊ້ລະບົບ</th>
-              <th>ອີເມວ໌</th>
-              <th>ເບີໂທ</th>
-              <th>ວັນທີສະໝັກສະມາຊິກ</th>
-              <th>ຄຳອະບາຍ</th>
-              <th>ສະຖານະ</th>
+              <th>#</th>
               <th>ສິດຜູ້ໃຊ້ລະບົບ</th>
+              <th>ຄຳອະບາຍ</th>
             </tr>
           </thead>
           <tbody>
             {{--  <tr class="{{rsUser.length > 0 ? 'hidden':'block'}}">
               <td colspan="7">ຍັງບໍ່ມີລາຍການ</td>
             </tr>  --}}
-            @each((it,i) in rsUser)
+            @each((it,i) in Roles)
             <tr>
-              <td>{{it.fname}} {{it.lname}}</td>
-              <td>{{it.username}}</td>
-              <td>{{it.email}}</td>
-              <td>{{it.mobile}}</td>
-              <td>{{it.createdAt}}</td>
-              <td>{{it}}</td>
-              <td>{{it}}</td>
-              <td>{{it.urole.title}}</td>
+              <td class="w-auto">{{it.id}}</td>
+              <td>{{it.title}}</td>
+              <td>{{it.description}}</td>
             </tr>
             @endeach
           </tbody>
           <tfoot>
             <tr>
-              <th>ຊື່ ແລະ ນາມສະກຸນ</th>
-              <th>ຊື່ຜູ້ໃຊ້ລະບົບ</th>
-              <th>ອີເມວ໌</th>
-              <th>ເບີໂທ</th>
-              <th>ວັນທີສະໝັກສະມາຊິກ</th>
-              <th>ຄຳອະບາຍ</th>
-              <th>ສະຖານະ</th>
+              <th>#</th>
               <th>ສິດຜູ້ໃຊ້ລະບົບ</th>
+              <th>ຄຳອະບາຍ</th>
             </tr>
           </tfoot>
         </table>

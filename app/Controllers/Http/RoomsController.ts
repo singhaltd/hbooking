@@ -209,4 +209,21 @@ export default class RoomsController {
         response.status(200)
         return RoomType
     }
+
+
+    public async ListRoomForbook({ request, view, response }: HttpContextContract) {
+        const { status } = request.all()
+        if (status) {
+            const Rooms = await MRoom.query().preload('roomStatus').where('status', status)
+            return view.render('components/table/lroom', {
+                Rooms
+            })
+        } else {
+            const Rooms = await MRoom.query().preload('roomStatus')
+            return view.render('components/table/lroom', {
+                Rooms
+            })
+        }
+
+    }
 }

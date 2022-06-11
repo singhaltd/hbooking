@@ -11,6 +11,14 @@ export default class Muser extends BaseModel {
   @column()
   public lname: string
   @column()
+  public sex: string
+  @column()
+  public dob: Date
+  @column()
+  public district:number
+  @column()
+  public village: string
+  @column()
   public username: string
   @column()
   public mobile: string
@@ -22,7 +30,9 @@ export default class Muser extends BaseModel {
   public rememberMeToken: string
   @column()
   public role: number
-
+  @column()
+  public image:string
+  
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

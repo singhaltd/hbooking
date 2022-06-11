@@ -2,11 +2,11 @@
 @set('title','Hello')
 
 @section('body')
-<main class="px-5 mt-10">
-    <div class="bg-base-400 w-full">
+<main class="px-3 mt-10">
+    <div class="dark:bg-base-200 px-3 py-3 w-full rounded-3xl">
         <div class="title flex justify-between">
             <h3>ຈັດການປະເພດຫ້ອງພັກ</h3>
-            <a href="type/create" for="MroomType" class="btn modal-button">ເພີ່ມໃໝ່</a>
+            <a href="type/create" for="MroomType" class="btn modal-button btn-sm my-2">ເພີ່ມໃໝ່</a>
         </div>
         <div class="content">
             <div class="overflow-x-auto">
@@ -46,10 +46,11 @@
                 </table>
             </div>
         </div>
-        <div class="mt-20"></div>
+    </div>
+    <div class="dark:bg-base-200 px-3 py-3 w-full rounded-3xl mt-5">
         <div class="title flex justify-between">
             <h3>ຈັດການສະຖານະຫ້ອງພັກ</h3>
-            <label for="MroomState" class="btn modal-button">ເພີ່ມໃໝ່</label>
+            <label for="MroomState" class="btn modal-button btn-sm">ເພີ່ມໃໝ່</label>
         </div>
         <div class="content">
             <div class="overflow-x-auto mt-5">
@@ -59,6 +60,7 @@
                             <th>ລະຫັດ</th>
                             <th>ສະຖານະ</th>
                             <th>ຄຳອະບາຍ</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

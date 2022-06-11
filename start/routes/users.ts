@@ -8,3 +8,8 @@ Route.group(() => {
 
 
 }).prefix('/users')
+
+
+Route.group(() => {
+    Route.post('','UsersController.SaveUser')
+}).prefix('v1/users')

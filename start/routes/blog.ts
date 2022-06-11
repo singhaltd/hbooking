@@ -1,7 +1,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 import Application from '@ioc:Adonis/Core/Application'
 Route.group(() => {
-    Route.get('/', 'BlogsController.index')
+    Route.get('/', 'BlogsController.index').as('auth.blog')
     Route.get('/create', 'BlogsController.create')
 }).prefix('blog').middleware(['auth'])
 
