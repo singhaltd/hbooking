@@ -1,11 +1,15 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema } from '@ioc:Adonis/Core/Validator'
+import MBooking from 'App/Models/MBooking'
 import MCountry from 'App/Models/MCountry'
 import MCustomer from 'App/Models/MCustomer'
 
 export default class BookingsController {
     public async index({ view }: HttpContextContract) {
-        return view.render('booking/show')
+        const Booking = await MBooking.query().preload('Cust').where('stat', 'B')
+        return view.render('booking/show', {
+            Booking
+        })
     }
     public async createBooking({ view }: HttpContextContract) {
         const rsCountries = await MCountry.all()

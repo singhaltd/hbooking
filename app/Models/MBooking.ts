@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import MCustomer from './MCustomer'
 
 export default class MBooking extends BaseModel {
   public static table = 'bookings'
@@ -35,4 +36,10 @@ export default class MBooking extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @hasOne(() => MCustomer, {
+    localKey: 'cust_id',
+    foreignKey: 'id'
+  })
+  public Cust: HasOne<typeof MCustomer>
 }

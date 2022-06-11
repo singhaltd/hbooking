@@ -3,7 +3,7 @@ import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class MCustomer extends BaseModel {
   public static table = 'customers'
-  @column({ isPrimary: true })
+  @column({ isPrimary: true ,columnName:'cid'})
   public id: number
   @column()
   public fname:string
