@@ -204,7 +204,7 @@ export default class RoomsController {
         return RoomType
     }
     public async clFindType({ params, response }: HttpContextContract) {
-        const RoomType = await MRoomType.query().preload('Room').preload('thumbnail').where('rtype', params.id).first()
+        const RoomType = await MRoomType.query().preload('thumbnail').where('rtype', params.id).first()
 
         response.status(200)
         return RoomType

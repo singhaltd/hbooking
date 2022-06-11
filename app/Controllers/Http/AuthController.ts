@@ -52,6 +52,25 @@ export default class AuthController {
 
         return response.redirect('/')
     }
+    public async signinApi({ request, response, auth }: HttpContextContract) {
+        const {username,password,remember_me} = request.all()
+        // const { username, password, remember_me } = await request.validate(SignInValidator)
+
+        // const loginAttemptsRemaining = await AuthAttemptService.getRemainingAttempts(username)
+        // if (loginAttemptsRemaining <= 0) {
+        //     session.flash('error', 'Your account has been locked due to repeated bad login attempts. Please reset your password.')
+        //     return response.redirect('/forgot-password')
+        // }
+
+        try {
+            // await auth.attempt(username, password)
+            return await auth.use('api').attempt(username, password)
+            // await AuthAttemptService.deleteBadAttempts(uid)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
 
     public async signout({ response, auth, session }: HttpContextContract) {
         await auth.logout()

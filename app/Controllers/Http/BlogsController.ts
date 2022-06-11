@@ -25,21 +25,20 @@ export default class BlogsController {
             con_type: schema.string()
         })
         const payload = await request.validate({ schema: reqBody })
-        console.log(payload)
-        // try {
-        //     await payload.cover_image.move(Application.tmpPath('uploads/blog'))
-        //     const blog = await MBlog.create({
-        //         title: payload.title,
-        //         body: payload.body,
-        //         con_type: payload.con_type,
-        //         cover_image: '/uploads/blog/' + payload.cover_image.fileName,
-        //         stat: payload.stat
-        //     })
-        //     response.status(200)
-        //     return blog
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        try {
+            await payload.cover_image.move(Application.tmpPath('uploads/blog'))
+            const blog = await MBlog.create({
+                title: payload.title,
+                body: payload.body,
+                con_type: payload.con_type,
+                cover_image: '/uploads/blog/' + payload.cover_image.fileName,
+                stat: payload.stat
+            })
+            response.status(200)
+            return blog
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     //api for client

@@ -4,6 +4,7 @@ Route.get('login', 'AuthController.login')
 Route.get('register', 'AuthController.register')
 
 Route.post('signin', 'AuthController.signin').as('auth.signin')
+Route.post('signinApi', 'AuthController.signinApi')
 Route.post('signup', 'AuthController.singup').as('auth.signup')
 Route.post('signout', 'AuthController.signout').as('auth.signout')
 
