@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2022 at 09:05 AM
+-- Generation Time: Jun 12, 2022 at 09:20 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -132,6 +132,14 @@ CREATE TABLE `bookings` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`ref_id`, `cust_id`, `adulth`, `child`, `room_type`, `check_in_date`, `check_out_date`, `check_in_time`, `check_out_time`, `maker`, `stat`, `booktype`, `rqty`, `trn_date`, `created_at`, `updated_at`) VALUES
+('52983044', 8, 1, 0, NULL, '2022-06-24', '2022-06-18', '08:25:00', '08:24:00', 1, 'B', 'W', 1, NULL, '2022-06-12 01:33:06', '2022-06-12 01:33:06'),
+('c6d01b57', 8, 1, 0, NULL, '2022-06-24', '2022-06-18', '08:25:00', '08:24:00', 1, 'I', 'W', 1, NULL, '2022-06-12 01:24:03', '2022-06-12 01:24:03');
+
 -- --------------------------------------------------------
 
 --
@@ -146,6 +154,13 @@ CREATE TABLE `booking_room` (
   `id` int(11) NOT NULL,
   `invoice` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `booking_room`
+--
+
+INSERT INTO `booking_room` (`room_num`, `irate`, `remark`, `book_ref`, `id`, `invoice`) VALUES
+('001', 120000, 'ຕຽງຄູ່', 'c6d01b57', 1, 'IVA0001');
 
 -- --------------------------------------------------------
 
@@ -195,7 +210,7 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`cid`, `fname`, `lname`, `email`, `mobile`, `dob`, `district_id`, `village`, `doc_type`, `doc_no`, `sex`, `status`, `created_at`, `updated_at`) VALUES
-(5, 'laithong', 'singhalat', 'laithong865@gmail.com', '02055057246', NULL, 101, 'test', 'PERSONAL_CARD', 'PA00012', 'M', NULL, '2022-06-11 04:45:37', '2022-06-11 04:45:37');
+(8, 'laithong', 'singhalat', 'laithong865@gmail.com', '02055057246', '2022-06-12', 101, 'donbung', 'PERSONAL_CARD', 'PA00012', 'M', NULL, '2022-06-12 01:23:29', '2022-06-12 01:33:06');
 
 -- --------------------------------------------------------
 
@@ -399,6 +414,31 @@ INSERT INTO `files` (`id`, `name`, `alt`, `caption`, `ext`, `size`, `url`, `crea
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `ivid` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `bookid` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `total` float NOT NULL,
+  `trn_date` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `maker` int(10) NOT NULL,
+  `paid` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`ivid`, `bookid`, `total`, `trn_date`, `created_at`, `updated_at`, `maker`, `paid`) VALUES
+('IV00001', 'c6d01b57', 12000, '2022-06-12', '2022-06-12 02:25:33', '2022-06-12 02:25:33', 1, 12000),
+('IV00002', 'c6d01b58', 12000, '2022-06-13', '2022-06-13 02:25:33', '2022-06-13 02:25:33', 1, 12000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menus`
 --
 
@@ -427,7 +467,37 @@ INSERT INTO `menus` (`id`, `title`, `order`, `slug`, `target`, `parent`) VALUES
 (9, 'ສິດຜູ້ໃຊ້ລະບົບ', 3, '/users/permission', '_self', 7),
 (10, 'ລາຍງານ', NULL, '/reports', '_top', NULL),
 (11, 'ເນື້ອຫາ Mobile', NULL, '/blog', '_top', NULL),
-(12, 'ຂ່າວສານ, popup, slide', NULL, '/', '_top', 11);
+(12, 'ຂ່າວສານ, popup, slide', NULL, '/', '_top', 11),
+(13, 'ຈັດການລູກຄ້າ', NULL, '/customer', '_top', NULL),
+(14, 'ລູກຄ້າ', NULL, '', '_self', 13),
+(15, 'ການຈອງ', NULL, '/booking', '_self', 10),
+(16, 'ຫ້ອງພັກ', NULL, '/rooms', '_self', 10),
+(17, 'ພະນັກງານ', NULL, '/staff', '_self', 10),
+(18, 'ລູກຄ້າ', NULL, '/customers', '_self', 10),
+(19, 'ສະຫຼຸບປະຈຳເດືອນ', NULL, '/monthly', '_self', 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_type`
+--
+
+CREATE TABLE `payment_type` (
+  `id` int(11) NOT NULL,
+  `ac_no` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `placeholder` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `qrcode` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `info` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `payment_type`
+--
+
+INSERT INTO `payment_type` (`id`, `ac_no`, `placeholder`, `qrcode`, `info`) VALUES
+(1, '0010000000434', 'POET HOTEL LAO VTE', '', 'ເງິນໂອນ'),
+(2, '', '', '', 'ຜ່ານເຄົ້າເຕີ່'),
+(3, '', '', '', 'ຕິດໜີ້');
 
 -- --------------------------------------------------------
 
@@ -584,7 +654,7 @@ INSERT INTO `room_statuses` (`scode`, `name`, `info`, `created_at`, `updated_at`
 CREATE TABLE `room_types` (
   `rtype` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -595,7 +665,7 @@ CREATE TABLE `room_types` (
 
 INSERT INTO `room_types` (`rtype`, `name`, `description`, `created_at`, `updated_at`) VALUES
 ('STBD', 'standard', NULL, NULL, NULL),
-('UBC', 'Urban Classic', NULL, '2022-06-10 07:29:23', '2022-06-10 07:29:23'),
+('UBC', 'Urban Classic', 'Facilities<br/>\n<P>Front desk [24-hour]<br/>\n\nAirport transfer<br/>\n\nAirport transfer<br/>\n\nBicycle rental<br/>\n\nSwimming pool [<br/>', '2022-06-10 07:29:23', '2022-06-10 07:29:23'),
 ('UDL', 'Urban Deluxe', NULL, '2022-06-11 06:59:02', '2022-06-11 06:59:02');
 
 -- --------------------------------------------------------
@@ -620,16 +690,17 @@ CREATE TABLE `users` (
   `village` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `image` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `dob` date DEFAULT NULL,
-  `sex` char(1) COLLATE utf8_unicode_ci NOT NULL
+  `sex` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `istaff` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fname`, `lname`, `username`, `mobile`, `email`, `password`, `remember_me_token`, `created_at`, `updated_at`, `role`, `district`, `village`, `image`, `dob`, `sex`) VALUES
-(1, 'laithong', 'singhalat', 'dda7dd97', '55057246', 'thong@mail.com', '$argon2id$v=19$t=3,m=4096,p=1$mTPnm9BECrxZcpeDXxi3MQ$NF7dvpy9WiBTrVI8Ib+hOL04yJ4TPy/dzBnpeXtHkPI', NULL, '2022-05-21 11:35:25', '2022-05-21 11:35:25', 1, 0, '', '', NULL, ''),
-(5, 'laithong', 'singhalat', 'test', '02055057246', 'laithong865@gmail.com', '$argon2id$v=19$t=3,m=4096,p=1$rdppPpQC6VhhrzPDshisug$grg0p4fPWkxEOQxloAavke2v1V1HVQvJqx8s6Jv5DTc', NULL, '2022-06-11 04:23:52', '2022-06-11 04:23:52', 3, 101, 'donbung', '', '2022-06-11', 'M');
+INSERT INTO `users` (`id`, `fname`, `lname`, `username`, `mobile`, `email`, `password`, `remember_me_token`, `created_at`, `updated_at`, `role`, `district`, `village`, `image`, `dob`, `sex`, `istaff`) VALUES
+(1, 'laithong', 'singhalat', 'dda7dd97', '55057246', 'thong@mail.com', '$argon2id$v=19$t=3,m=4096,p=1$mTPnm9BECrxZcpeDXxi3MQ$NF7dvpy9WiBTrVI8Ib+hOL04yJ4TPy/dzBnpeXtHkPI', NULL, '2022-05-21 11:35:25', '2022-05-21 11:35:25', 1, 0, '', '', NULL, '', 0),
+(5, 'laithong', 'singhalat', 'test', '02055057246', 'laithong865@gmail.com', '$argon2id$v=19$t=3,m=4096,p=1$rdppPpQC6VhhrzPDshisug$grg0p4fPWkxEOQxloAavke2v1V1HVQvJqx8s6Jv5DTc', NULL, '2022-06-11 04:23:52', '2022-06-11 04:23:52', 3, 101, 'donbung', '', '2022-06-11', 'M', 0);
 
 -- --------------------------------------------------------
 
@@ -650,7 +721,8 @@ CREATE TABLE `user_roles` (
 INSERT INTO `user_roles` (`id`, `title`, `description`) VALUES
 (1, 'ADMIN', 'ສິດຜູ້ໃຊ້ສູງສຸດໃນລະບົບ'),
 (2, 'STAFF', 'ສິດຜູ້ໃຊ້ສຳລັບພະນັກງານ'),
-(3, 'GUEST', 'ສິດຜູ້ໃຊ້ສຳຫຼັບລູກຄ້າທົ່ວໄປ');
+(3, 'GUEST', 'ສິດຜູ້ໃຊ້ສຳຫຼັບລູກຄ້າທົ່ວໄປ'),
+(4, 'MG', 'ສິດສຳຫຼັບຜູ້ຈັດການທົ່ວໄປ');
 
 -- --------------------------------------------------------
 
@@ -683,7 +755,34 @@ INSERT INTO `user_role_mapings` (`id`, `role_id`, `menu_id`, `create`, `update`,
 (9, 1, 9, 1, 1, 1),
 (10, 1, 10, 1, 1, 1),
 (11, 1, 11, 1, 1, 1),
-(12, 1, 12, 1, 1, 1);
+(12, 1, 12, 1, 1, 1),
+(13, 1, 13, 1, 1, 1),
+(14, 1, 14, 1, 1, 1),
+(15, 1, 15, 1, 1, 1),
+(16, 1, 16, 1, 1, 1),
+(17, 1, 17, 1, 1, 1),
+(18, 1, 18, 1, 1, 1),
+(19, 1, 19, 1, 1, 1),
+(20, 2, 14, 1, 1, 1),
+(21, 2, 15, 1, 1, 1),
+(22, 2, 16, 1, 1, 1),
+(23, 2, 17, 1, 1, 1),
+(24, 2, 18, 1, 1, 1),
+(25, 2, 10, 1, 1, 1),
+(26, 2, 1, 1, 1, 1),
+(27, 2, 4, 1, 1, 1),
+(28, 2, 11, 1, 1, 1),
+(29, 2, 12, 1, 1, 1),
+(30, 2, 19, 1, 1, 1),
+(31, 2, 2, 1, 1, 1),
+(32, 2, 3, 1, 1, 1),
+(33, 2, 5, 1, 1, 1),
+(34, 2, 5, 1, 1, 1),
+(35, 2, 13, 1, 1, 1),
+(36, 4, 10, 1, 1, 1),
+(37, 4, 15, 1, 1, 1),
+(38, 4, 16, 1, 1, 1),
+(39, 4, 19, 1, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -750,9 +849,26 @@ ALTER TABLE `files`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`ivid`),
+  ADD UNIQUE KEY `bookid` (`bookid`),
+  ADD UNIQUE KEY `ivid` (`ivid`),
+  ADD KEY `ivid_2` (`ivid`),
+  ADD KEY `bookid_2` (`bookid`),
+  ADD KEY `maker` (`maker`);
+
+--
 -- Indexes for table `menus`
 --
 ALTER TABLE `menus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `payment_type`
+--
+ALTER TABLE `payment_type`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -847,13 +963,13 @@ ALTER TABLE `auth_pages`
 -- AUTO_INCREMENT for table `booking_room`
 --
 ALTER TABLE `booking_room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `cid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `districts`
@@ -871,7 +987,13 @@ ALTER TABLE `files`
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `payment_type`
+--
+ALTER TABLE `payment_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -907,13 +1029,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_roles`
 --
 ALTER TABLE `user_roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_role_mapings`
 --
 ALTER TABLE `user_role_mapings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Constraints for dumped tables
