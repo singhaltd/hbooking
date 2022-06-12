@@ -257,15 +257,29 @@
             <table class="table table-compact w-full">
               <thead>
                 <tr>
-                <tr>
                   <th>ເລກທີຫ້ອງ</th>
                   <th>ປະເພດຫ້ອງ</th>
                   <th>ລາຄາ</th>
                   <th>ໝາຍເຫດ</th>
                 </tr>
-                </tr>
               </thead>
               <tbody id="broomList">
+                @each(r in Rooms)
+                <tr data-json="">
+                    <td><input type="hidden" name="xroom" value="{{r.room_num}}" /></td>
+                    <td>{{r.room_num}}</td>
+                    <td>{{String(r.price).replace(/(.)(?=(\d{3})+$)/g,'$1,')}} ກີບ</td>
+                    <td>{{r.roomStatus.name}}</td>
+                </tr>
+                @endeach
+                @each(r in Rooms)
+                <tr data-json="">
+                    <td><input type="hidden" name="xroom" onchange="selectRoom('{room_num:{{r.room_num}}}')" class="checkbox checkbox-xs" /></td>
+                    <td>{{r.room_num}}</td>
+                    <td>{{String(r.price).replace(/(.)(?=(\d{3})+$)/g,'$1,')}} ກີບ</td>
+                    <td>{{r.roomStatus.name}}</td>
+                </tr>
+                @endeach
               </tbody>
               <tfoot>
                 <tr>
@@ -324,6 +338,7 @@
 <input type="checkbox" id="AddRoomList" class="modal-toggle" />
 <div class="modal modal-bottom sm:modal-middle">
   <div class="modal-box">
+    <form id="ckfroom">
     <label for="AddRoomList" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
     <h3 class="font-bold text-lg mb-5">ເພີ່ມຫ້ອງພັກ</h3>
     <div class="form-control w-full">
@@ -343,6 +358,7 @@
         <thead>
           <tr>
           <tr>
+            <th></th>
             <th>ເລກທີຫ້ອງ</th>
             <th>ລາຄາ</th>
             <th>ສະຖານະ</th>
@@ -350,31 +366,40 @@
           </tr>
         </thead>
         <tbody id="tableRoomList">
-
+          @each(r in Rooms)
+          <tr data-json="">
+              <td><input type="checkbox" value="{{r.room_num}}" name="ckroom" class="checkbox checkbox-xs" /></td>
+              <td>{{r.room_num}}</td>
+              <td>{{String(r.price).replace(/(.)(?=(\d{3})+$)/g,'$1,')}} ກີບ</td>
+              <td>{{r.roomStatus.name}}</td>
+          </tr>
+          @endeach
         </tbody>
       </table>
     </div>
-    <div class="">
-      <div class="md:flex flex-row md:space-x-4 w-full text-xs">
-        <div class="form-control w-full">
-          <label class="label">
-            <span class="label-text">ຄຳອະບາຍ <abbr title="required">*</abbr></span>
-          </label>
-          <textarea class="textarea textarea-bordered w-full" name="info"></textarea>
-          {{-- <label class="label">
-            <span class="label-text-alt">Alt label</span>
-          </label> --}}
-        </div>
-      </div>
-    </div>
     <div class="modal-action">
-      <button class="btn w-full" onclick="SaveStatus()">ບັນທຶກ</button>
+      <button class="btn w-full" onclick="AddRoom()">ບັນທຶກ</button>
     </div>
+  </form>
   </div>
 </div>
 @endsection
 @section('scripts')
 <script>
+   var eroomfm = document.getElementById("ckfroom");
+   var seleRoom = []
+   eroomfm.addEventListener('submit',function(e){
+     e.preventDefault()
+     var cb = document.getElementsByName("ckroom");
+     for(var i=0;i < cb.length;i++){
+       if(cb[i].checked == true){
+         seleRoom.push(cb[i].value)
+       }
+     }
+     await fetch(`/getRoomState?status=O`).then(response => response.text()).then(res => {
+        document.getElementById('tableRoomList').innerHTML = res
+      })
+   })
   function SaveRoom() {
     const data = document.roomfm
     var dataform = new FormData(data);

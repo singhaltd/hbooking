@@ -226,4 +226,11 @@ export default class RoomsController {
         }
 
     }
+    public async getSelectRoom({ request, view }: HttpContextContract) {
+        const { rooms } = request.all()
+        const rsRoom = await MRoom.query().preload('roomType').whereIn('room_num', rooms)
+        return view.render('components/table/selroom', {
+            rsRoom
+        })
+    }
 }

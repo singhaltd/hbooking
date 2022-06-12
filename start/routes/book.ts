@@ -24,3 +24,4 @@ Route.post('add-to-list', async ({ request, response }) => {
 
 
 Route.get('getRoomState', 'RoomsController.ListRoomForbook')
+Route.get('getSelectRoom', 'RoomsController.getSelectRoom')
