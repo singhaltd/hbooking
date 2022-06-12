@@ -1,0 +1,68 @@
+@layout('layouts/auth')
+@set('title','Hello')
+
+@section('body')
+<main class="px-5 mt-10">
+  <div class="bg-base-400 w-full">
+    <div class="title flex justify-between mb-2">
+      <h3>ລາຍງານລູກຄ້າ</h3>
+      <div class="flex">
+        <form class="flex border border-gray-700 rounded-lg mr-3" method="GET" action="{{route('reports.customers')}}">
+          <input type="text" name="search" class="input w-full input-sm" placeholder="ປ້ອນການຄົ້ນຫາ..." />
+          <button type="submit" class="rounded-lg btn-sm btn px-3">
+            ດຶງຂໍ້ມູນ
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="content">
+      <div class="overflow-x-auto">
+        <table class="table table-compact w-full">
+          <thead>
+            <tr>
+              <th>ຊື່ ແລະ ນາມສະກຸນ</th>
+              <th>ອີເມວ໌</th>
+              <th>ເບີໂທ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{--  <tr class="{{rsRoom.length > 0 ? 'hidden':'block'}}">
+              <td colspan="7">ຍັງບໍ່ມີລາຍການ</td>
+          </tr>  --}}
+            @each((it,i) in rsCustomer)
+            <tr>
+              <td>{{it.fname}} {{it.lname}}</td>
+              <td>{{it.email}}</td>
+              <td>{{it.mobile}}</td>
+            </tr>
+            @endeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+@endsection
+@section('scripts')
+<script>
+  function SaveRoom() {
+    const data = document.roomfm
+    var dataform = new FormData(data);
+    let url = '/v1/rooms';
+    var xmlhr = new XMLHttpRequest();
+    xmlhr.open("POST", url);
+    xmlhr.send(dataform);
+
+    xmlhr.onreadystatechange = function () {
+      if (xmlhr.readyState === 4) {
+        var response = JSON.parse(xmlhr.responseText);
+        if (xmlhr.status === 200) {
+          window.top.location = window.top.location
+        } else {
+          console.log('failed');
+        }
+      }
+    }
+  }
+</script>
+@endsection

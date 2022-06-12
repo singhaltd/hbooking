@@ -1,0 +1,51 @@
+@layout('layouts/auth')
+@set('title','Hello')
+
+@section('body')
+<main class="px-5 mt-10">
+  <div class="bg-base-400 w-full">
+    <div class="title flex justify-between mb-2">
+      <h3>ລາຍງານພະນັກງານ</h3>
+      <div class="flex">
+        <p class="px-3 mt-2">ເລີ່ມແຕ່ວັນທີ ຫາ ວັນທີ</p>
+        <form class="flex border border-gray-700 rounded-lg mr-3" method="GET" action="{{route('reports.staff')}}">
+          <input type="date" name="dtfrm" class="input w-full input-sm" />
+          <input type="date" name="dtto" class="input w-full input-sm" />
+          <button type="submit" class="rounded-lg btn-sm btn px-3">
+            ດຶງຂໍ້ມູນ
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="content">
+      <div class="overflow-x-auto">
+        <table class="table table-compact w-full">
+          <thead>
+            <tr>
+              <th>ຊື່ ແລະ ນາມສະກຸນ</th>
+              <th>ອີເມວ໌</th>
+              <th>ເບີໂທ</th>
+              <th>ຈຳນວນບິນ</th>
+              <th>ລວມຈຳນວນເງິນ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{--  <tr class="{{rsRoom.length > 0 ? 'hidden':'block'}}">
+              <td colspan="7">ຍັງບໍ່ມີລາຍການ</td>
+          </tr>  --}}
+            @each((it,i) in reSult)
+            <tr>
+              <td>{{it.fullname}}</td>
+              <td>{{it.email}}</td>
+              <td>{{it.mobile}}</td>
+              <td>{{it.aiv}}</td>
+              <td>{{it.total}}</td>
+            </tr>
+            @endeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+@endsection

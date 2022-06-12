@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import MBooking from './MBooking'
 
 export default class MCustomer extends BaseModel {
   public static table = 'customers'
@@ -32,4 +33,11 @@ export default class MCustomer extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+
+  @hasMany(()=> MBooking,{
+    localKey:'id',
+    foreignKey:'cust_id',
+  })
+  public booking:HasMany<typeof MBooking>
 }

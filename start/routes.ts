@@ -4,5 +4,6 @@ import './routes/room'
 import './routes/book'
 import './routes/city'
 import './routes/blog'
+import './routes/report'
 
 

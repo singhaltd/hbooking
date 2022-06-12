@@ -3,6 +3,8 @@ import { schema } from '@ioc:Adonis/Core/Validator'
 import MBooking from 'App/Models/MBooking'
 import MCountry from 'App/Models/MCountry'
 import MCustomer from 'App/Models/MCustomer'
+import Minvoice from 'App/Models/Minvoice'
+import MPayment from 'App/Models/MPayment'
 
 export default class BookingsController {
     public async index({ view }: HttpContextContract) {
@@ -11,15 +13,26 @@ export default class BookingsController {
             Booking
         })
     }
+    public async checkIndex({ view }: HttpContextContract) {
+        const rsInvoice = await Minvoice.query().preload('book',(Builder)=> {
+            Builder.preload('Cust').where('stat','I')
+        })
+        return view.render('checkin/show',{
+            rsInvoice
+        })
+    }
     public async createBooking({ view }: HttpContextContract) {
         const rsCountries = await MCountry.all()
+        const rsPay = await MPayment.all()
         return view.render('booking/create', {
-            rsCountries
+            rsCountries,
+            rsPay
         })
     }
 
-    public async SeveBooking({ request, session, response }: HttpContextContract) {
+    public async SeveBooking({ request, session,auth, response }: HttpContextContract) {
         const { email, dob } = request.all()
+        const user = await auth.use('web').user
         const reqCustomer = schema.create({
             fname: schema.string(),
             lname: schema.string(),
@@ -34,8 +47,8 @@ export default class BookingsController {
         const reqBooking = schema.create({
             adulth: schema.number(),
             child: schema.number(),
-            check_in_date: schema.date(),
-            check_out_date: schema.date(),
+            check_in_date: schema.string(),
+            check_out_date: schema.string(),
             check_in_time: schema.string(),
             check_out_time: schema.string(),
             booktype: schema.string(),
@@ -45,9 +58,10 @@ export default class BookingsController {
             const paycust = await request.validate({ schema: reqCustomer })
             const payBook = await request.validate({ schema: reqBooking })
             const data = Object.assign(paycust, { email: email, dob: dob })
-            // const customer =  await MCustomer.updateOrCreate(data, data)
-            // response.redirect('/booking')
-            console.log(payBook)
+            const customer =  await MCustomer.updateOrCreate(data, data)
+            customer.related('booking').create(Object.assign(payBook,{maker:user?.id}))
+            response.redirect('/booking')
+            return customer
         } catch (error) {
             console.log(error)
             // session.flash('errors', error)
@@ -55,5 +69,17 @@ export default class BookingsController {
         }
 
 
+    }
+
+
+
+
+    ///  payment
+
+    public async paytypeIndex({view}){
+        const payment = await MPayment.all()
+        return view.render('payment/show',{
+            payment
+        })
     }
 }

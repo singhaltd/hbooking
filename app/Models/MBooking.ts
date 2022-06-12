@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeSave, beforeUpdate, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import MCustomer from './MCustomer'
+import Minvoice from './Minvoice'
 
 export default class MBooking extends BaseModel {
   public static table = 'bookings'
@@ -42,4 +43,26 @@ export default class MBooking extends BaseModel {
     foreignKey: 'id'
   })
   public Cust: HasOne<typeof MCustomer>
+
+  @beforeSave()
+  public static async hashBooking(mbook: MBooking) {
+    if (!mbook.$dirty.ref_key) {
+      mbook.ref_key = Math.random().toString(16).substr(2, 8)
+    }
+    if (!mbook.$dirty.stat) {
+      mbook.stat = 'B'
+    }
+  }
+  @beforeUpdate()
+  public static async updateStatus(mbook: MBooking){
+    if(mbook.$dirty.stat == 'I'){
+      mbook.stat = 'I'
+      await Minvoice.create({
+        ivid:Math.random().toString(16).substr(2, 8),
+        bookid: mbook.$attributes.ref_key,
+        total:0,
+        paid:0
+      })
+    }
+  }
 }

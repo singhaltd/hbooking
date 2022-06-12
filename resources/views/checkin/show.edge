@@ -5,7 +5,7 @@
 <main class="px-5 mt-10">
   <div class="bg-base-400 w-full">
     <div class="title flex justify-between mb-2">
-      <h3>ລາຍການການຈອງ</h3>
+      <h3>ລາຍການເຂົ້າພັກ</h3>
       <div class="flex">
         <form class="flex border border-gray-700 rounded-lg mr-3" method="GET" action="{{route('auth.blog')}}">
           <input type="text" name="search" class="input w-full input-sm" placeholder="ປ້ອນຫົວຂໍ້ການຄົ້ນຫາ..." />
@@ -21,15 +21,14 @@
         <table class="table table-compact w-full">
           <thead>
             <tr>
+              <th>ເລກທີບິນ</th>
               <th>ເລກທີການຈອງ</th>
               <th>ຊື່ ແລະ ນາມສະກຸນ</th>
-              <th>ອີເມວ໌</th>
-              <th>ເບີໂທ</th>
               <th>ຈຳນວນຫ້ອງ</th>
-              <th>ວັນທີເດືອນປີຈອງ</th>
               <th>ວັນທີເດືອນປີເຂົ້າພັກ</th>
               <th>ວັນທີເດືອນປີອອກ</th>
               <th>ສະຖານະ</th>
+              <th>ລວມເງິນທັງໝົດ</th>
               <th>ປະເພດ</th>
               <th>ປະເພດຊຳລະ</th>
             </tr>
@@ -38,19 +37,18 @@
             {{--  <tr class="{{rsRoom.length > 0 ? 'hidden':'block'}}">
               <td colspan="7">ຍັງບໍ່ມີລາຍການ</td>
           </tr>  --}}
-            @each((it,i) in Booking)
+            @each((it,i) in rsInvoice)
             <tr>
-              <td>{{it.ref_key}}</td>
-              <td>{{it.Cust.fname}} {{it.Cust.lname}}</td>
-              <td>{{it.Cust.email}}</td>
-              <td>{{it.Cust.mobile}}</td>
-              <td>{{it.rqty}}</td>
-              <td>{{it.trn_date}}</td>
-              <td>{{it.check_in_date}} {{it.check_in_time}}</td>
-              <td>{{it.check_out_date}} {{it.check_out_time}}</td>
-              <td>{{it.stat}}</td>
-              <td>{{it.booktype}}</td>
-              <td>ໂອນຊຳລະ</td>
+              <td>{{it.ivid}}</td>
+              <td>{{it.bookid}}</td>
+              <td>{{it.book.Cust.fname}} {{it.book.Cust.lname}}</td>
+              <td>{{it.book.rqty}}</td>
+              <td>{{it.book.check_in_date}}</td>
+              <td>{{it.book.check_out_date}}</td>
+              <td>{{it.book.stat}}</td>
+              <td></td>
+              <td>{{it.book.stat}}</td>
+              <td>{{it.book.stat}}</td>
               <td><div class="flex right-0">
                 <label for="CheckInCon">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -60,7 +58,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
-                <button onclick="delRoom({{it.id}})">
+                <button onclick="delRoom({{it.ivid}})">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
@@ -70,15 +68,14 @@
             @endeach
           </tbody>
           <tfoot>
-            <th>ເລກທີການຈອງ</th>
+            <th>ເລກທີບິນ</th>
+              <th>ເລກທີການຈອງ</th>
               <th>ຊື່ ແລະ ນາມສະກຸນ</th>
-              <th>ອີເມວ໌</th>
-              <th>ເບີໂທ</th>
               <th>ຈຳນວນຫ້ອງ</th>
-              <th>ວັນທີເດືອນປີຈອງ</th>
               <th>ວັນທີເດືອນປີເຂົ້າພັກ</th>
               <th>ວັນທີເດືອນປີອອກ</th>
               <th>ສະຖານະ</th>
+              <th>ລວມເງິນທັງໝົດ</th>
               <th>ປະເພດ</th>
               <th>ປະເພດຊຳລະ</th>
           </tfoot>
