@@ -1,4 +1,4 @@
-import { BaseModel, BelongsTo, belongsTo, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import MRoom from 'App/Models/MRoomType'
 import { DateTime } from 'luxon'
 import MFile from './MFile'
