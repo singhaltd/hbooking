@@ -14,8 +14,10 @@ export default class MCustomer extends BaseModel {
   public email:string
   @column()
   public mobile:string
-  @column()
-  public dob:Date
+  @column.date({
+    serialize: (value) => value.toFormat('dd/MM/yyyy')
+  })
+  public dob:DateTime
   @column()
   public district_id:string
   @column()

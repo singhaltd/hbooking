@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import MBooking from 'App/Models/MBooking'
+import MPayment from './MPayment'
 
 export default class Minvoice extends BaseModel {
   public static table = "invoice"
@@ -14,10 +15,14 @@ export default class Minvoice extends BaseModel {
   public total: number
   @column()
   public paid: number
-  @column()
+  @column({columnName:'paid_type'})
   public pay_type: number
   @column()
   public trn_date: string
+  @column()
+  public status: string
+  @column()
+  public maker: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -30,4 +35,9 @@ export default class Minvoice extends BaseModel {
     foreignKey: 'ref_key'
   })
   public book: HasOne<typeof MBooking>
+  @hasOne(() => MPayment, {
+    localKey: 'pay_type',
+    foreignKey: 'id'
+  })
+  public payt: HasOne<typeof MPayment>
 }

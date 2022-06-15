@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{title}}</title>
+  <title>{{title}} {{link}}</title>
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet">
   @entryPointStyles('app')
 </head>
 <body>
   <div>
-    @!component('components/navbar/auttop')
+    @!component('components/navbar/auttop',{
+      title: 'Hello world'
+    })
     <div class="flex overflow-hidden  pt-16">
       {{--  @!component('components/navbar/asidebar')  --}}
       <div id="asidebar"></div>
-      <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>
-      <div id="main-content" class="h-full w-full relative overflow-y-auto lg:ml-[170px]">
+      {{--  <div class="bg-gray-900 opacity-50 hidden fixed inset-0 z-10" id="sidebarBackdrop"></div>  --}}
+      <div id="main-content" class="h-full w-full min-w-[800px] relative overflow-y-auto ml-[170px]">
         @!section('body')
       </div>
     </div>
@@ -27,6 +29,10 @@
   })
     
     // document.getElementById('asidebar').innerHTML = html
+    function ActiveAside() {
+      var element = document.getElementById("AsidNavbar");
+      element.classList.toggle("hidden");
+    }
   </script>
 </body>
 </html>

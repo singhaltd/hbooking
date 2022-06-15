@@ -5,6 +5,7 @@ import Application from '@ioc:Adonis/Core/Application'
 export default class BlogsController {
     public async index({ request, session, view }: HttpContextContract) {
         const { search } = request.all()
+        session.put('link-route', '/blog/')
         if (search) {
             const blog = await MBlog.query().preload('ptype').where('title', 'like', `%${search}%`)
             return view.render('blog/blog', {

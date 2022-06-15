@@ -1,0 +1,222 @@
+@layout('layouts/auth')
+@set('title','Hello')
+
+@section('body')
+    <form id="userForm">
+        <div class="px-5">
+          <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ຊື່ແທ້ <abbr title="required">*</abbr></span>
+              </label>
+              <input type="text" name="fname" value="{{rsUser.fname}}" class="input input-bordered w-full input-sm" id="fname" required />
+              {{-- <label class="label">
+                <span class="label-text-alt">Alt label</span>
+              </label> --}}
+            </div>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ນາມສະກຸນ <abbr title="required">*</abbr></span>
+              </label>
+              <input type="text" name="lname" value="{{rsUser.lname}}" class="input input-bordered w-full input-sm" required />
+              {{-- <label class="label">
+                <span class="label-text-alt">Alt label</span>
+              </label> --}}
+            </div>
+          </div>
+          <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ເພດ</span>
+              </label>
+              <div class="gender flex border rounded text-gray-500">
+                <label class="flex items-center cursor-pointer m-2">
+                  <input class="radio radio-sm" type="radio" name="sex" value="M" checked>
+                  <div class="title ml-3">ຊາຍ</div>
+                </label>
+  
+                <label class="flex items-center cursor-pointer m-2">
+                  <input class="radio radio-sm" type="radio" name="sex" value="F">
+                  <div class="title ml-3">ຍິງ</div>
+                </label>
+              </div>
+            </div>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ວັນທີ.ເດືອນ.ປີເກີດ</span>
+              </label>
+              <input type="date" name="dob" value="{{rsUser.dob}}" class="input input-bordered w-full input-sm" placeholder="dd/mm/yyyy" />
+              {{-- <label class="label">
+                <span class="label-text-alt">Alt label</span>
+              </label> --}}
+            </div>
+          </div>
+          <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ປະເທດ <abbr title="required">*</abbr></span>
+              </label>
+              <select class="select select-bordered w-full select-sm" id="selCountry">
+                @each(ti in Country)
+                <option value="{{ti.id}}">{{ti.name}}</option>
+                @endeach
+              </select>
+              {{-- <label class="label"> roomtype
+                <span class="label-text-alt">Alt label</span>
+              </label> --}}
+            </div>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ແຂວງ <abbr title="required">*</abbr></span>
+              </label>
+              <select class="select select-bordered select-sm w-full" id="selProvince">
+  
+              </select>
+            </div>
+          </div>
+          <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ເມືອງ <abbr title="required">*</abbr></span>
+              </label>
+              <select class="select select-bordered w-full select-sm" name="district" id="selDistrict" required>
+  
+              </select>
+            </div>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ບ້ານ</span>
+              </label>
+              <input type="text" name="village" value="{{rsUser.village}}" class="input input-bordered w-full input-sm" />
+              {{-- <label class="label"> status
+                <span class="label-text-alt">Alt label</span>
+              </label> --}}
+            </div>
+          </div>
+          <div class="md:flex flex-row w-full text-xs">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ຊື່ຜູ້ໃຊ້ລະບົບ <abbr title="required">*</abbr></span>
+              </label>
+              <input type="text" name="username" value="{{rsUser.username}}" disabled class="input input-bordered w-full input-sm" required />
+              {{-- <label class="label">
+                <span class="label-text-alt">Alt label</span>
+              </label> --}}
+            </div>
+          </div>
+          <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ອີເມວ໌ <abbr title="required">*</abbr></span>
+              </label>
+              <input type="email" name="email" value="{{rsUser.email}}" class="input input-bordered w-full input-sm" required />
+              {{-- <label class="label">
+                <span class="label-text-alt">Alt label</span>
+              </label> --}}
+            </div>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ເບີໂທ <abbr title="required">*</abbr></span>
+              </label>
+              <input type="text" name="mobile" value="{{rsUser.mobile}}" class="input input-bordered w-full input-sm" required />
+              {{-- <label class="label">
+                <span class="label-text-alt">Alt label</span>
+              </label> --}}
+            </div>
+          </div>
+          <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ລະຫັດຜ່ານ</span>
+              </label>
+              <input type="password" name="password" id="password" class="input input-bordered w-full input-sm"
+                required />
+            </div>
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ຢືນຢັງລະຫັດຜ່ານ</span>
+              </label>
+              <input type="password" id="cpassword" class="input input-bordered w-full input-sm" required />
+              <label class="label hidden" id="messpassword">
+                <span class="label-text-alt text-red-800">ລະຫັດຜ່ານທີ່ປ້ອນບໍ່ຄືກັນ</span>
+              </label>
+            </div>
+          </div>
+          <div class="md:flex flex-row md:space-x-4 w-full text-xs">
+            <div class="form-control w-full">
+              <label class="label">
+                <span class="label-text">ລະດັບຜູ້ໃຊ້ລະບົບ <abbr title="required">*</abbr></span>
+              </label>
+              <select class="select select-bordered w-full select-sm" name="role">
+                @each(ti in uRole)
+                @if(rsUser.role == ti.id)
+                    <option value="{{ti.id}}" selected>{{ti.title}}</option>
+                @else
+                    <option value="{{ti.id}}">{{ti.title}}</option>
+                @endif
+                @endeach
+              </select>
+            </div>
+          </div>
+          <div class="modal-action mb-4">
+            <button type="submit" class="btn w-full btn-sm">ບັນທຶກ</button>
+          </div>
+      </form>
+</div>
+
+@endsection
+@section('scripts')
+<script>
+  const form = document.querySelector('#userForm');
+  const fname = document.querySelector('#fname')
+  const password = document.querySelector('#password')
+  const cpassword = document.querySelector('#cpassword')
+  const messpassword = document.querySelector('#messpassword')
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    if (cpassword.value == password.value) {
+      SaveUser()
+    }
+  }
+  cpassword.oninput = (e) => {
+    if (cpassword.value != password.value) {
+      messpassword.classList.remove('hidden')
+    } else {
+      messpassword.classList.add('hidden')
+    }
+  }
+  function SaveUser() {
+    const form = document.querySelector('#userForm');
+    var dataform = new FormData(form);
+    fetch(`/v1/users`, { method: 'POST', body: dataform }).then((response) => response.json())
+      .then((response) => {
+        if(response.error== false){
+          window.top.location = window.top.location
+        }
+      })
+  }
+
+
+  let elc = document.getElementById('selCountry')
+  let elp = document.getElementById('selProvince')
+
+  async function getProvince(str) {
+    await fetch('/city/province/' + str).then(response => response.text()).then(res => {
+      document.getElementById('selProvince').innerHTML = res
+    })
+  }
+  elp.addEventListener('change', () => {
+    getDistrict(elp.value)
+  })
+  async function getDistrict(str) {
+    await fetch('/city/district/' + str).then(response => response.text()).then(res => {
+      document.getElementById('selDistrict').innerHTML = res
+    })
+  }
+  getProvince(elc.value)
+
+  setTimeout(() => {
+    getDistrict(elp.value)
+  }, 100)
+</script>
+@endsection

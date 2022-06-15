@@ -7,8 +7,11 @@ import SignUpValidator from 'App/Validators/SignUpValidator'
 
 export default class AuthController {
 
-    public async dashboard({ view, auth, session }:HttpContextContract) {
-        return view.render('dashboard')
+    public async dashboard({ view, auth, session }: HttpContextContract) {
+        const room = await Database.rawQuery('select rs.scode,rs.name,IFNULL(r.amt,0) amt from room_statuses rs left join (select count(*) amt, status from rooms group by status) r on rs.scode = r.status')
+        return view.render('dashboard',{
+            room:room[0]
+        })
     }
     public async login({ view }: HttpContextContract) {
         return view.render('login')
@@ -18,7 +21,7 @@ export default class AuthController {
     }
 
 
-    public async singup({ request, response, auth, session }:HttpContextContract) {
+    public async singup({ request, response, auth, session }: HttpContextContract) {
         const user = await Muser.create(request.all())
         await auth.login(user)
         session.flash({ notification: "Logged in successfully" });
@@ -26,7 +29,7 @@ export default class AuthController {
     }
 
     public async signin({ request, response, auth, session }: HttpContextContract) {
-        const {username,password,remember_me} = request.all()
+        const { username, password, remember_me } = request.all()
         // const { username, password, remember_me } = await request.validate(SignInValidator)
 
         // const loginAttemptsRemaining = await AuthAttemptService.getRemainingAttempts(username)
@@ -53,7 +56,7 @@ export default class AuthController {
         return response.redirect('/')
     }
     public async signinApi({ request, response, auth }: HttpContextContract) {
-        const {username,password,remember_me} = request.all()
+        const { username, password, remember_me } = request.all()
         // const { username, password, remember_me } = await request.validate(SignInValidator)
 
         // const loginAttemptsRemaining = await AuthAttemptService.getRemainingAttempts(username)
@@ -70,7 +73,7 @@ export default class AuthController {
             console.log(error)
         }
     }
-    
+
 
     public async signout({ response, auth, session }: HttpContextContract) {
         await auth.logout()
@@ -82,16 +85,16 @@ export default class AuthController {
     /// api
 
 
-    public async getmenu({ request,view, auth }: HttpContextContract) {
-        try{
+    public async getmenu({ request, view, auth }: HttpContextContract) {
+        try {
             const user = await auth.use('web').user
             const resMenu = await Database.rawQuery(`select n.* from user_role_mapings m, menus n where n.id = m.menu_id and m.role_id = ${user?.role}`)
             return view.render('components/navbar/asidebar', {
-                    resMenu
+                resMenu
             })
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
-       
+
     }
 }

@@ -1,6 +1,6 @@
 @each(r in Rooms)
 <tr data-json="">
-    <td><input type="checkbox" name="ckroom" value="{{r}}" class="checkbox checkbox-xs" /></td>
+    <td><input type="checkbox" value="{{r.room_num}}" name="ckroom" class="checkbox checkbox-xs" /></td>
     <td>{{r.room_num}}</td>
     <td>{{String(r.price).replace(/(.)(?=(\d{3})+$)/g,'$1,')}} ກີບ</td>
     <td>{{r.roomStatus.name}}</td>

@@ -2,5 +2,38 @@
 @set('title','Hello')
 
 @section('body')
-{{--  {{inspect(auth.user)}}  --}}
+<div class="px-5">
+    <div class="stats border bg-slate-100 text-primary-content w-full">
+        @each(r in room)
+            <div class="stat">
+                <div class="stat-title text-slate-800">{{r.name}}</div>
+                <div class="stat-value text-slate-800">{{r.amt}}</div>
+                <div class="stat-actions">
+                    <a href="/rooms?search={{r.scode}}" class="btn btn-sm btn-primary text-sm">ເບິ່ງເພີ່ມຕື່ມ</a>
+                </div>
+            </div>
+        @endeach
+    </div>
+    <div class="mt-5"></div>
+    <div class="grid grid-cols-2">
+        <div class="overflow-x-auto">
+            <table class="table w-full">
+                <!-- head -->
+                <thead>
+                    <tr>
+                        <th>ປະເພດການຈອງ</th>
+                        <th>ຈຳນວນຫ້ອງ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>1</th>
+                        <td>Cy Ganderton</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 @endsection

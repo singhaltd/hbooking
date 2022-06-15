@@ -1,6 +1,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 Route.group(() => {
-    Route.get('/', 'RoomsController.index')
+    Route.get('/', 'RoomsController.index').as('auth.rooms')
     Route.get('/edit/:id', 'RoomsController.updateRoom')
     Route.get('/type', 'RoomsController.indexType')
     Route.get('/type/create', 'RoomsController.CreateType')

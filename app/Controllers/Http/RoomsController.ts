@@ -6,19 +6,27 @@ import MRoomType from 'App/Models/MRoomType'
 import Application from '@ioc:Adonis/Core/Application'
 
 export default class RoomsController {
-    public async index({ view }: HttpContextContract) {
-        const rsRoom = await MRoom.query().preload('roomType').preload('roomStatus')
+    public async index({ request, view, session }: HttpContextContract) {
+        const { search } = request.all()
+        let rsRoom = null;
+        if (search && search != '*') {
+            rsRoom = await MRoom.query().preload('roomType').preload('roomStatus').where('status', search)
+        } else {
+            rsRoom = await MRoom.query().preload('roomType').preload('roomStatus')
+        }
         const rsRoomType = await MRoomType.all()
         const rsStatus = await MRoomStatus.all()
+        session.put('link-route', '/rooms')
         return view.render('rooms/show', {
             rsRoom,
             rsRoomType,
             rsStatus
         })
     }
-    public async indexType({ view }: HttpContextContract) {
+    public async indexType({ view, session }: HttpContextContract) {
         const rsRoomType = await MRoomType.all()
         const rsRoomStatus = await MRoomStatus.all()
+        session.put('link-route', '/rooms/type')
         return view.render('rooms/type', {
             rsRoomType,
             rsRoomStatus
@@ -226,11 +234,14 @@ export default class RoomsController {
         }
 
     }
-    public async getSelectRoom({ request, view }: HttpContextContract) {
+    public async getSelectRoom({ request, session, view }: HttpContextContract) {
         const { rooms } = request.all()
-        const rsRoom = await MRoom.query().preload('roomType').whereIn('room_num', rooms)
+        const rsRoom = await MRoom.query().preload('roomType').whereRaw('number in ' + rooms)
+        const Total = await MRoom.query().select().sum('price as total').whereRaw('number in ' + rooms)
+        session.put('btotal', Total[0].$extras.total)
         return view.render('components/table/selroom', {
-            rsRoom
+            rsRoom,
+            rsTotal: Total[0].$extras.total
         })
     }
 }

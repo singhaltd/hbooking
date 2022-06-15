@@ -33,10 +33,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="{{rsUser.length > 0 ? 'hidden':'block'}}">
+            <tr class="{{rsCustomer.length > 0 ? 'hidden':'block'}}">
               <td colspan="7">ຍັງບໍ່ມີລາຍການ</td>
             </tr>
-            @each((it,i) in rsUser)
+            @each((it,i) in rsCustomer)
             <tr>
               <td>{{it.fname}} {{it.lname}}</td>
               <td>{{it.username}}</td>

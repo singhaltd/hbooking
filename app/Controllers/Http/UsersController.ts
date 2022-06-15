@@ -1,15 +1,40 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import MCountry from 'App/Models/MCountry'
+import MCustomer from 'App/Models/MCustomer'
 import MuRole from 'App/Models/MuRole'
 import Muser from 'App/Models/Muser'
 
 export default class UsersController {
 
-    public async index({ view }: HttpContextContract) {
+    public async index({ view, session }: HttpContextContract) {
+
         const rsUser = await Muser.query().preload('urole')
         const uRole = await MuRole.all()
         const Country = await MCountry.all()
+        session.put('link-route', '/users')
         return view.render('users/show', {
+            rsUser,
+            uRole,
+            Country
+        })
+    }
+    public async customerindex({ request, view, session }: HttpContextContract) {
+
+        const rsCustomer = await MCustomer.all()
+        // const uRole = await MuRole.all()
+        // const Country = await MCountry.all()
+        session.put('link-route', '/customer')
+        return view.render('customer/show', {
+            rsCustomer
+        })
+    }
+    public async ViewUser({ params, view, session }: HttpContextContract) {
+
+        const rsUser = await Muser.query().preload('urole').where('id', params.id).first()
+        const uRole = await MuRole.all()
+        const Country = await MCountry.all()
+        session.put('link-route', '/users')
+        return view.render('users/view', {
             rsUser,
             uRole,
             Country
@@ -37,10 +62,27 @@ export default class UsersController {
         }
     }
 
-    public async indexRole({ view }: HttpContextContract) {
+    public async indexRole({ view, session }: HttpContextContract) {
         const Roles = await MuRole.query().orderBy('id')
+        session.put('link-route', '/users/permission')
         return view.render('users/role', {
             Roles
         })
+    }
+
+
+
+    public async mbilLogin({ request, auth, response }: HttpContextContract) {
+
+        const username = request.input('username')
+        const password = request.input('password')
+
+        try {
+            const token = await auth.use('api').attempt(username, password)
+            return token
+        } catch(e) {
+            console.log(e)
+            return response.badRequest('Invalid credentials')
+        }
     }
 }

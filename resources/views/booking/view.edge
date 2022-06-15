@@ -6,10 +6,21 @@
   <form action="{{route('api.booking.store')}}" method="POST">
     <div class="bg-base-400 w-full">
       <div class="title flex justify-between">
-        <h3>ລາຍການການຈອງ</h3>
-        <button type="submit" class="btn modal-button btn-sm">ບັນທຶກ</button>
+        <h3>ເລກທີຈອງ  {{rsBook.ref_key}} | ເລກທີບິນ {{rsBook?.invoice?.ivid}}</h3>
+        <div class="flex">
+          @if(rsBook.stat == 'I')
+            <button type="button" class="btn modal-button btn-sm mr-3" onclick="statChange('{{rsBook.ref_key}}','{{rsBook?.invoice?.ivid}}','O')">check Out</button>
+          @elseif(rsBook.stat == 'B')
+            <button type="button" class="btn modal-button btn-sm mr-3" onclick="statChange('{{rsBook.ref_key}}','{{rsBook?.invoice?.ivid}}','I')">checkin</button>
+          @endif
+          @if(rsBook.stat == 'B')
+            <button type="button" class="btn modal-button btn-sm mr-3" onclick="statChange('{{rsBook.ref_key}}','{{rsBook?.invoice?.ivid}}','C')">ຍົກເລີກ</button>
+          @endif
+          <button type="button" class="btn modal-button btn-sm" onclick="distableForm()">ແກ້ໄຂ</button>
+        </div>
       </div>
       <div class="content">
+
         <div class="">
           <fieldset class="border p-3 rounded-xl">
             <legend>ຂໍ້ມູນລູກຄ້າ</legend>
@@ -18,23 +29,13 @@
                 <label class="label">
                   <span class="label-text">ຊື່ແທ້ <abbr title="required">*</abbr></span>
                 </label>
-                <input type="text" name="fname" class="input input-bordered w-full input-sm" />
-                @if(flashMessages.has('messages.fname'))
-                  <label class="label">
-                    <span class="label-text-alt text-red-400">ກາລຸນາປ້ອນຂໍ້ມູນ</span>
-                  </label>
-                @endif
+                <input type="text" name="fname" value="{{rsBook?.Cust.fname}}" class="input input-bordered w-full input-sm" disabled/>
               </div>
               <div class="form-control w-full">
                 <label class="label">
                   <span class="label-text">ນາມສະກຸນ <abbr title="required">*</abbr></span>
                 </label>
-                <input type="text" name="lname" class="input input-bordered w-full input-sm" />
-                @if(flashMessages.has('messages.lname'))
-                  <label class="label">
-                    <span class="label-text-alt text-red-400">ກາລຸນາປ້ອນຂໍ້ມູນ</span>
-                  </label>
-                @endif
+                <input type="text" name="lname" value="{{rsBook?.Cust.lname}}" class="input input-bordered w-full input-sm" disabled/>
               </div>
               <div class="form-control w-full">
                 <label class="label">
@@ -42,12 +43,12 @@
                 </label>
                 <div class="gender flex  rounded text-gray-500">
                   <label class="flex items-center cursor-pointer m-2">
-                    <input class="radio radio-sm" type="radio" name="sex" value="M" checked>
+                    <input class="radio radio-sm" type="radio" name="sex" value="M" checked="{{rsBook?.Cust.sex == 'M' ? true:false}}" disabled>
                     <div class="title ml-3">ຊາຍ</div>
                   </label>
 
                   <label class="flex items-center cursor-pointer m-2">
-                    <input class="radio radio-sm" type="radio" name="sex" value="F">
+                    <input class="radio radio-sm" type="radio" name="sex" value="F" checked="{{rsBook?.Cust.sex == 'M' ? true:false}}" disabled>
                     <div class="title ml-3">ຍິງ</div>
                   </label>
                 </div>
@@ -56,34 +57,25 @@
                 <label class="label">
                   <span class="label-text">ວັນທີ.ເດືອນ.ປີເກີດ</span>
                 </label>
-                <input type="date" name="dob" class="input input-bordered w-full input-sm" />
-                {{-- <label class="label">
-                  <span class="label-text-alt">Alt label</span>
-                </label> --}}
+                <input type="date" name="dob" value="{{rsBook?.Cust?.dob?.toFormat('yyyy-MM-dd')}}" placeholder="dd-mm-yyyy" class="input input-bordered w-full input-sm" disabled/>
               </div>
               <div class="form-control w-full">
                 <label class="label">
                   <span class="label-text">ປະເທດ <abbr title="required">*</abbr></span>
                 </label>
-                <select class="select select-bordered w-full select-sm" id="selCountry">
+                <select class="select select-bordered w-full select-sm" id="selCountry" disabled>
                   @each(ti in rsCountries)
                   <option value="{{ti.id}}">{{ti.name}}</option>
                   @endeach
                 </select>
-                {{-- <label class="label"> roomtype
-                  <span class="label-text-alt">Alt label</span>
-                </label> --}}
               </div>
               <div class="form-control w-full">
                 <label class="label">
                   <span class="label-text">ແຂວງ <abbr title="required">*</abbr></span>
                 </label>
-                <select class="select select-bordered select-sm w-full" id="selProvince">
+                <select class="select select-bordered select-sm w-full" id="selProvince" disabled>
 
                 </select>
-                {{-- <label class="label"> status
-                  <span class="label-text-alt">Alt label</span>
-                </label> --}}
               </div>
             </div>
             <div class="md:flex flex-row md:space-x-4 w-full text-xs">
@@ -91,67 +83,43 @@
                 <label class="label">
                   <span class="label-text">ເມືອງ <abbr title="required">*</abbr></span>
                 </label>
-                <select class="select select-bordered w-full select-sm" name="district_id" id="selDistrict">
+                <select class="select select-bordered w-full select-sm" name="district_id" id="selDistrict" disabled>
 
                 </select>
-                {{-- <label class="label"> roomtype
-                  <span class="label-text-alt">Alt label</span>
-                </label> --}}
               </div>
               <div class="form-control w-full">
                 <label class="label">
                   <span class="label-text">ບ້ານ <abbr title="required">*</abbr></span>
                 </label>
-                <input type="text" name="village" class="input input-bordered w-full input-sm" />
-                @if(flashMessages.has('messages.village'))
-                  <label class="label">
-                    <span class="label-text-alt text-red-400">ກາລຸນາປ້ອນຂໍ້ມູນ</span>
-                  </label>
-                @endif
+                <input type="text" name="village" value="{{rsBook?.Cust.village}}" class="input input-bordered w-full input-sm" disabled />
               </div>
               <div class="form-control w-full">
                 <label class="label">
                   <span class="label-text">ປະເພດເອກະສານ <abbr title="required">*</abbr></span>
                 </label>
-                <select class="select select-bordered w-full select-sm" name="doc_type" id="">
-                  <option value="PERSONAL_CARD" selected>ບັດປະຈຳໂຕ</option>
-                  <option value="PASSPORT">ໜັງສືຜ່ານແດນ</option>
-                  <option value="FAMMILY_BOOK">ສຳມະໂນຄົວ</option>
+                <select class="select select-bordered w-full select-sm" name="doc_type" id="" disabled>
+                  <option value="PERSONAL_CARD" selected="{{rsBook?.Cust.doc_type == 'PERSONAL_CARD' ? true:false}}">ບັດປະຈຳໂຕ</option>
+                  <option value="PASSPORT" selected="{{rsBook?.Cust.doc_type == 'PASSPORT' ? true:false}}">ໜັງສືຜ່ານແດນ</option>
+                  <option value="FAMMILY_BOOK" selected="{{rsBook?.Cust.doc_type == 'FAMMILY_BOOK' ? true:false}}">ສຳມະໂນຄົວ</option>
                 </select>
-                {{-- <label class="label"> roomtype
-                  <span class="label-text-alt">Alt label</span>
-                </label> --}}
               </div>
               <div class="form-control w-full">
                 <label class="label">
                   <span class="label-text">ເລກທີເອກະສານ <abbr title="required">*</abbr></span>
                 </label>
-                <input type="text" name="doc_no" class="input input-bordered w-full input-sm" />
-                @if(flashMessages.has('messages.doc_no'))
-                  <label class="label">
-                    <span class="label-text-alt text-red-400">ກາລຸນາປ້ອນຂໍ້ມູນ</span>
-                  </label>
-                @endif
+                <input type="text" name="doc_no" value="{{rsBook?.Cust.doc_no}}" class="input input-bordered w-full input-sm" disabled />
               </div>
               <div class="form-control w-full">
                 <label class="label">
                   <span class="label-text">ເບີໂທ <abbr title="required">*</abbr></span>
                 </label>
-                <input type="text" name="mobile" class="input input-bordered w-full input-sm" />
-                @if(flashMessages.has('messages.mobile'))
-                  <label class="label">
-                    <span class="label-text-alt text-red-400">ກາລຸນາປ້ອນຂໍ້ມູນ</span>
-                  </label>
-                @endif
+                <input type="text" name="mobile" value="{{rsBook?.Cust.mobile}}" class="input input-bordered w-full input-sm" disabled />
               </div>
               <div class="form-control w-full">
                 <label class="label">
                   <span class="label-text">ອິເມວ໌</span>
                 </label>
-                <input type="text" name="email" class="input input-bordered w-full input-sm" />
-                {{-- <label class="label"> status
-                  <span class="label-text-alt">Alt label</span>
-                </label> --}}
+                <input type="text" name="email" value="{{rsBook?.Cust.email}}" class="input input-bordered w-full input-sm" disabled/>
               </div>
             </div>
           </fieldset>
@@ -164,7 +132,7 @@
                     <label class="label">
                       <span class="label-text">ຜູ້ໃຫຍ່ <abbr title="required">*</abbr></span>
                     </label>
-                    <input type="number" value="1" name="adulth" class="input input-bordered w-full input-sm" />
+                    <input type="number" value="{{rsBook?.adulth}}" name="adulth" class="input input-bordered w-full input-sm" disabled/>
                     {{-- <label class="label">
                       <span class="label-text-alt">Alt label</span>
                     </label> --}}
@@ -173,7 +141,7 @@
                     <label class="label">
                       <span class="label-text">ເດັກນ້ອຍ <abbr title="required">*</abbr></span>
                     </label>
-                    <input type="number" value="0" name="child" class="input input-bordered w-full input-sm" />
+                    <input type="number" value="{{rsBook?.child}}" name="child" class="input input-bordered w-full input-sm" disabled/>
                     {{-- <label class="label">
                       <span class="label-text-alt">Alt label</span>
                     </label> --}}
@@ -184,7 +152,7 @@
                     <label class="label">
                       <span class="label-text">ຈຳນວນຫ້ອງ <abbr title="required">*</abbr></span>
                     </label>
-                    <input type="number" value="1" name="rqty" class="input input-bordered w-full input-sm" />
+                    <input type="number" value="{{rsBook?.rqty}}" name="rqty" class="input input-bordered w-full input-sm" disabled/>
                     {{-- <label class="label">
                       <span class="label-text-alt">Alt label</span>
                     </label> --}}
@@ -198,16 +166,28 @@
                 <div class="form-control w-full">
                   <div class="gender flex text-gray-500">
                     <label class="flex items-center cursor-pointer m-2">
-                      <input class="radio radio-sm" type="radio" name="booktype" value="W" checked>
+                      @if(rsBook.booktype == 'W')
+                        <input class="radio radio-sm" type="radio" name="booktype" value="W" checked disabled>
+                      @else
+                        <input class="radio radio-sm" type="radio" name="booktype" value="W" disabled>
+                      @endif
                       <div class="title ml-3">Walk In</div>
                     </label>
 
                     <label class="flex items-center cursor-pointer m-2">
-                      <input class="radio radio-sm" type="radio" name="booktype" value="M">
+                      @if(rsBook.booktype == 'M')
+                        <input class="radio radio-sm" type="radio" name="booktype" value="M" checked disabled>
+                      @else
+                        <input class="radio radio-sm" type="radio" name="booktype" value="M" disabled>
+                      @endif
                       <div class="title ml-3">Mobile App</div>
                     </label>
                     <label class="flex items-center cursor-pointer m-2">
-                      <input class="radio radio-sm" type="radio" name="booktype" value="O">
+                      @if(rsBook.booktype == 'O')
+                        <input class="radio radio-sm" type="radio" name="booktype" value="O" checked disabled>
+                      @else
+                        <input class="radio radio-sm" type="radio" name="booktype" value="O" disabled>
+                      @endif
                       <div class="title ml-3">ອື່ນໆ</div>
                     </label>
                   </div>
@@ -220,23 +200,19 @@
                     <label class="label">
                       <span class="label-text">ວັນທີເຂົ້າ <abbr title="required">*</abbr></span>
                     </label>
-                    <input type="date" name="check_in_date" class="input input-bordered w-full input-sm" />
-                    @if(flashMessages.has('messages.check_in_date'))
-                      <label class="label">
-                        <span class="label-text-alt text-red-400">ກາລຸນາປ້ອນຂໍ້ມູນ</span>
-                      </label>
-                    @endif
+                    <input type="date" value="{{rsBook?.check_in_date.toFormat('yyyy-MM-dd')}}" name="check_in_date" class="input input-bordered w-full input-sm" disabled/>
+                    {{-- <label class="label">
+                      <span class="label-text-alt">Alt label</span>
+                    </label> --}}
                   </div>
                   <div class="form-control w-full">
                     <label class="label">
                       <span class="label-text">ເວລາເຂົ້າ <abbr title="required">*</abbr></span>
                     </label>
-                    <input type="time" name="check_in_time" value="12:00"  class="input input-bordered w-full input-sm" />
-                    @if(flashMessages.has('messages.check_in_time'))
-                      <label class="label">
-                        <span class="label-text-alt text-red-400">ກາລຸນາປ້ອນຂໍ້ມູນ</span>
-                      </label>
-                    @endif
+                    <input type="time" value="{{rsBook?.check_in_time}}" placeholder="dd/MM/yyyy" name="check_in_time" class="input input-bordered w-full input-sm" disabled/>
+                    {{-- <label class="label">
+                      <span class="label-text-alt">Alt label</span>
+                    </label> --}}
                   </div>
                 </div>
                 <div class="md:flex flex-row w-full text-xs gap-2">
@@ -244,23 +220,19 @@
                     <label class="label">
                       <span class="label-text">ວັນທີອອກ <abbr title="required">*</abbr></span>
                     </label>
-                    <input type="date" name="check_out_date" class="input input-bordered w-full input-sm" />
-                    @if(flashMessages.has('messages.check_out_date'))
-                      <label class="label">
-                        <span class="label-text-alt text-red-400">ກາລຸນາປ້ອນຂໍ້ມູນ</span>
-                      </label>
-                    @endif
+                    <input type="date" name="check_out_date" value="{{rsBook?.check_out_date.toFormat('yyyy-MM-dd')}}" class="input input-bordered w-full input-sm" disabled/>
+                    {{-- <label class="label">
+                      <span class="label-text-alt">Alt label</span>
+                    </label> --}}
                   </div>
                   <div class="form-control w-full">
                     <label class="label">
                       <span class="label-text">ເວລາອອກ <abbr title="required">*</abbr></span>
                     </label>
-                    <input type="time" name="check_out_time" value="12:00" class="input input-bordered w-full input-sm" />
-                    @if(flashMessages.has('messages.check_out_time'))
-                      <label class="label">
-                        <span class="label-text-alt text-red-400">ກາລຸນາປ້ອນຂໍ້ມູນ</span>
-                      </label>
-                    @endif
+                    <input type="time" name="check_out_time" value="{{rsBook?.check_out_time}}" class="input input-bordered w-full input-sm" disabled/>
+                    {{-- <label class="label">
+                      <span class="label-text-alt">Alt label</span>
+                    </label> --}}
                   </div>
                 </div>
               </fieldset>
@@ -268,7 +240,7 @@
           </div>
           <div class="title flex justify-between mt-3 py-3">
             <h3>ຫ້ອງພັກ</h3>
-            <label type="button" for="AddRoomList" class="btn modal-button btn-sm">ເພີ່ມ</label>
+            <label type="button" for="AddRoomList" class="btn modal-button btn-sm" disabled>ເພີ່ມ</label>
           </div>
           <div class="overflow-x-auto">
             <table class="table table-compact w-full">
@@ -280,7 +252,13 @@
                 </tr>
               </thead>
               <tbody id="broomList">
-              
+                @each(r in rsRoom)
+                <tr data-json="">
+                    <td>{{r.room_num}} <input type="hidden" name="xroom" value="{{r.room_num}}" class="checkbox checkbox-xs" data-total="{{rsTotal}}"/></td>
+                    <td>{{r.roomType.title}}</td>
+                    <td>{{String(r.price).replace(/(.)(?=(\d{3})+$)/g,'$1,')}} ກີບ</td>
+                </tr>
+                @endeach
               </tbody>
               <tfoot>
                 <tr>
@@ -298,7 +276,7 @@
                 <label class="label">
                   <span class="label-text">ລວມເງິນທັງໝົດ <abbr title="required">*</abbr></span>
                 </label>
-                <input type="number" value="0" name="mtotal" class="input input-bordered w-full input-sm" />
+                <input type="number" value="{{rsBook?.invoice?.total}}" name="mtotal" class="input input-bordered w-full input-sm" disabled/>
                 {{-- <label class="label">
                   <span class="label-text-alt">Alt label</span>
                 </label> --}}
@@ -307,13 +285,14 @@
                 <label class="label">
                   <span class="label-text">ປະເພດຊຳລະ <abbr title="required">*</abbr></span>
                 </label>
-                <select class="select select-sm select-bordered" name="pay_type">
+                <select class="select select-sm select-bordered" disabled>
                   @each(ip in rsPay)
-                    @if(ip.id == 1)
-                      <option value="{{ip.id}}" selected>{{ip.info}}</option>
+                    @if(rsBook?.invoice?.paid_type == ip.id)
+                    <option value="{{ip.id}}" selected>{{ip.info}}</option>
                     @else
-                      <option value="{{ip.id}}">{{ip.info}}</option>
+                    <option value="{{ip.id}}">{{ip.info}}</option>
                     @endif
+                  
                   @endeach
                 </select>
               </div>
@@ -323,7 +302,7 @@
                 <label class="label">
                   <span class="label-text">ຈຳນວເງິນຊຳລະ <abbr title="required">*</abbr></span>
                 </label>
-                <input type="number" value="1" name="paytotal" class="input input-bordered w-full input-sm" />
+                <input type="number" value="{{rsBook?.invoice?.paid}}" name="paytotal" class="input input-bordered w-full input-sm" disabled/>
                 {{-- <label class="label">
                   <span class="label-text-alt">Alt label</span>
                 </label> --}}
@@ -331,9 +310,9 @@
             </div>
           </fieldset>
         </div>
-        <div class="title flex justify-between mb-4 mt-4">
+        <div class="title flex justify-between mt-3 mb-3">
           <div></div>
-          <button type="submit" class="btn modal-button btn-sm">ບັນທຶກ</button>
+          <button type="submit" class="btn modal-button btn-sm" disabled>ບັນທຶກ</button>
         </div>
   </form>
   </div>
@@ -387,6 +366,7 @@
   </form>
   </div>
 </div>
+<div id="alertMessage"></div>
 @endsection
 @section('scripts')
 <script>
@@ -406,9 +386,35 @@
         document.getElementById('broomList').innerHTML = res
         var el = document.querySelectorAll('input[type=hidden][name="xroom"]');
         document.querySelectorAll('input[type=number][name="mtotal"]')[0].value = el[0].getAttribute('data-total')
-        document.querySelectorAll('input[type=number][name="paytotal"]')[0].value = el[0].getAttribute('data-total')
       })
    })
+   function statChange(bkid,ivid,stat){
+     fetch(`/api/booking/stat/${ivid}/${bkid}`,{
+       method:'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body:JSON.stringify({status:stat})
+     }).then(response => response.text()).then(res => {
+        document.getElementById('alertMessage').innerHTML = res
+      })
+   }
+   function distableForm(){
+      const inputs = document.getElementsByTagName("input");
+      const select = document.getElementsByTagName("select");
+      const labels = document.getElementsByTagName("label");
+      const button = document.getElementsByTagName("button");
+      for (const input of inputs) {
+        input.disabled = false
+      }
+      for (const input of select) {
+        input.disabled = false
+      }
+      for (const input of labels) {
+        input.disabled = false
+      }
+      for (const input of button) {
+        input.disabled = false
+      }
+   }
   function SaveRoom() {
     const data = document.roomfm
     var dataform = new FormData(data);

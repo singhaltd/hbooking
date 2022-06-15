@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, beforeUpdate, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeSave, beforeUpdate, column, hasMany, HasOne, hasOne, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import MCustomer from './MCustomer'
 import Minvoice from './Minvoice'
 
@@ -13,10 +13,14 @@ export default class MBooking extends BaseModel {
   public adulth: number
   @column()
   public child: number
-  @column()
-  public check_in_date: Date
-  @column()
-  public check_out_date: Date
+  @column.date({
+    serialize: (value) => value.toFormat('dd/MM/yyyy')
+  })
+  public check_in_date: DateTime
+  @column.date({
+    serialize: (value) => value.toFormat('dd/MM/yyyy')
+  })
+  public check_out_date: DateTime
   @column()
   public check_in_time: string
   @column()
@@ -29,8 +33,10 @@ export default class MBooking extends BaseModel {
   public booktype: string
   @column()
   public rqty: number
-  @column()
-  public trn_date: Date
+  @column.date({
+    serialize: (value) => value.toFormat('dd/MM/yyyy')
+  })
+  public trn_date: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -44,11 +50,13 @@ export default class MBooking extends BaseModel {
   })
   public Cust: HasOne<typeof MCustomer>
 
+  @hasOne(()=> Minvoice,{
+    localKey:'ref_key',
+    foreignKey:'bookid'
+  })
+  public invoice:HasOne<typeof Minvoice>
   @beforeSave()
   public static async hashBooking(mbook: MBooking) {
-    if (!mbook.$dirty.ref_key) {
-      mbook.ref_key = Math.random().toString(16).substr(2, 8)
-    }
     if (!mbook.$dirty.stat) {
       mbook.stat = 'B'
     }

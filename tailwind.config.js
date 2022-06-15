@@ -5,19 +5,26 @@ module.exports = {
     './resources/js/**/*.js',
     './resources/js/**/*.ts',
   ],
-  darkMode: false,
+  darkMode: 'class',
   theme: {
     fontFamily: {
       'sans': ['Lao_SomVang', 'Roboto'],
     },
-    fontSize:{
+    fontSize: {
       'base': '.7rem',
-      'md':'.8rem'
+      'md': '.8rem'
     },
     extend: {},
   },
   plugins: [require("daisyui")],
   daisyui: {
-    darkTheme: "dark",
-  },
+    styled: true,
+    themes: true,
+    base: true,
+    utils: true,
+    logs: true,
+    rtl: false,
+    prefix: "",
+    darkTheme: "class",
+  }
 }
