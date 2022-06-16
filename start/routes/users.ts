@@ -1,9 +1,9 @@
 import Route from '@ioc:Adonis/Core/Route'
-
+Route.group(()=> {
 Route.group(() => {
     Route.get('/', 'UsersController.index')
     Route.get('/create', 'UsersController.create')
-    Route.get('/v/:id', 'UsersController.ViewUser')
+    Route.get('/v/:id', 'UsersController.ViewUser').as('auth.viewUser')
 
     Route.get('/permission', 'UsersController.indexRole')
 
@@ -27,3 +27,4 @@ Route.group(() => {
     Route.get('/history', 'BookingsController.historyApi').middleware('auth:api')
     Route.post('/register', 'AuthController.registerApi')
 }).prefix('/api/v1')
+}).prefix('peot')

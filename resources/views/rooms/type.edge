@@ -164,7 +164,7 @@
     function SaveType() {
         const data = document.roomType
         var dataform = new FormData(data);
-        let url = '/v1/rooms/type';
+        let url = '/peot/v1/rooms/type';
         var xmlhr = new XMLHttpRequest();
         xmlhr.open("POST", url);
         xmlhr.send(dataform);
@@ -183,7 +183,7 @@
     function SaveUpdateType(){
         const dataform = document.TypeUpdate
         var formData = new FormData(dataform)
-        fetch(`/v1/rooms/type`,{method:'PUT',body:formData}).then((response)=> response.text())
+        fetch(`/peot/v1/rooms/type`,{method:'PUT',body:formData}).then((response)=> response.text())
         .then((response)=> {
             window.top.location = window.top.location
         })
@@ -192,7 +192,7 @@
     function SaveStatus() {
         const data = document.roomStatus
         var dataform = new FormData(data);
-        let url = '/v1/rooms/status';
+        let url = '/peot/v1/rooms/status';
         var xmlhr = new XMLHttpRequest();
         xmlhr.open("POST", url);
         xmlhr.send(dataform);
@@ -211,7 +211,7 @@
     function updateStatus(){
         const dataForm = document.StatusSaveUpdate
         var formData = new FormData(dataForm)
-        fetch(`/v1/rooms/status`,{method:'PUT',body:formData}).then((response)=> response.text())
+        fetch(`/peot/v1/rooms/status`,{method:'PUT',body:formData}).then((response)=> response.text())
         .then((response)=> {
             window.top.location = window.top.location
         })
@@ -219,19 +219,19 @@
     }
 
     function statUpdate(str){
-        fetch(`/rooms/status/${str}/edit`).then((response)=> response.text())
+        fetch(`/peot/rooms/status/${str}/edit`).then((response)=> response.text())
         .then((response)=> {
             document.getElementById('uStatus').innerHTML = response
         })
     }
     function updateType(str){
-        fetch(`/rooms/type/${str}/edit`).then((response)=> response.text())
+        fetch(`/peot/rooms/type/${str}/edit`).then((response)=> response.text())
         .then((response)=> {
             document.getElementById('uStatus').innerHTML = response
         })
     }
     function deleteData(str,url){
-       fetch(`/v1/rooms/${url}/${str}`,{
+       fetch(`/peot/v1/rooms/${url}/${str}`,{
          method:'DELETE'
        }).then(response => response.json())
        .then(data => {

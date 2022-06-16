@@ -402,7 +402,7 @@
        }
      }
      console.log(seleRoom)
-     await fetch(`/getSelectRoom?rooms=(${seleRoom.toString()})`).then(response => response.text()).then(res => {
+     await fetch(`/peot/getSelectRoom?rooms=(${seleRoom.toString()})`).then(response => response.text()).then(res => {
         document.getElementById('broomList').innerHTML = res
         var el = document.querySelectorAll('input[type=hidden][name="xroom"]');
         document.querySelectorAll('input[type=number][name="mtotal"]')[0].value = el[0].getAttribute('data-total')
@@ -412,7 +412,7 @@
   function SaveRoom() {
     const data = document.roomfm
     var dataform = new FormData(data);
-    let url = '/v1/rooms';
+    let url = '/peot/v1/rooms';
     var xmlhr = new XMLHttpRequest();
     xmlhr.open("POST", url);
     xmlhr.send(dataform);
@@ -433,11 +433,11 @@
 
   async function changeHandler(event) {
     if (this.value === 'O') {
-      await fetch(`/getRoomState?status=O`).then(response => response.text()).then(res => {
+      await fetch(`/peot/getRoomState?status=O`).then(response => response.text()).then(res => {
         document.getElementById('tableRoomList').innerHTML = res
       })
     } else {
-      await fetch(`/getRoomState?status=`).then(response => response.text()).then(res => {
+      await fetch(`/peot/getRoomState?status=`).then(response => response.text()).then(res => {
         document.getElementById('tableRoomList').innerHTML = res
       })
     }
@@ -449,7 +449,7 @@
   let elp = document.getElementById('selProvince')
 
   async function getProvince(str) {
-    await fetch('/city/province/' + str).then(response => response.text()).then(res => {
+    await fetch('/peot/city/province/' + str).then(response => response.text()).then(res => {
       document.getElementById('selProvince').innerHTML = res
     })
   }
@@ -457,7 +457,7 @@
     getDistrict(elp.value)
   })
   async function getDistrict(str) {
-    await fetch('/city/district/' + str).then(response => response.text()).then(res => {
+    await fetch('/peot/city/district/' + str).then(response => response.text()).then(res => {
       document.getElementById('selDistrict').innerHTML = res
     })
   }

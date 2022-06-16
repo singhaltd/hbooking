@@ -1,4 +1,5 @@
 import Route from '@ioc:Adonis/Core/Route'
+Route.group(()=> {
 Route.group(() => {
     Route.get('/', 'RoomsController.index').as('auth.rooms')
     Route.get('/edit/:id', 'RoomsController.updateRoom')
@@ -26,3 +27,4 @@ Route.group(() => {
     Route.get('cltypeDetail/:id', 'RoomsController.clFindType')
     Route.get('cldetail/:id', 'RoomsController.delRoomStatus')
 }).prefix('v1/rooms')
+}).prefix('peot')

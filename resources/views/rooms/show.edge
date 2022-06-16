@@ -191,7 +191,7 @@
           data = document.roomfmEdit
         }
         var dataform = new FormData(data);
-        let url = '/v1/rooms';
+        let url = '/peot/v1/rooms';
         var xmlhr = new XMLHttpRequest();
         xmlhr.open("POST", url);
         xmlhr.send(dataform);
@@ -209,8 +209,8 @@
     }
 
     function delRoom(str){
-       let url = '/v1/rooms';
-       fetch(`/v1/rooms/${str}`,{
+       let url = '/peot/v1/rooms';
+       fetch(`/peot/v1/rooms/${str}`,{
          method:'DELETE'
        }).then(response => response.json())
        .then(data => {
@@ -218,7 +218,7 @@
     }
 
     function editroom(str){
-      fetch(`/rooms/edit/${str}`,{
+      fetch(`/peot/rooms/edit/${str}`,{
          method:'get'
        }).then(response => response.text())
        .then(data => {

@@ -1,8 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, beforeSave, beforeUpdate, column, hasMany, HasOne, hasOne, manyToMany } from '@ioc:Adonis/Lucid/Orm'
+import { afterFetch, BaseModel, beforeFetch, beforeSave, beforeUpdate, column, hasMany, HasOne, hasOne, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import MCustomer from './MCustomer'
-import Minvoice from './Minvoice'
-
+import Minvoice from './Minvoice';
 export default class MBooking extends BaseModel {
   public static table = 'bookings'
   @column({ isPrimary: true, columnName: 'ref_id' })
@@ -14,9 +13,9 @@ export default class MBooking extends BaseModel {
   @column()
   public child: number
   @column()
-  public check_in_date: DateTime
+  public check_in_date: string
   @column()
-  public check_out_date: DateTime
+  public check_out_date: string
   @column()
   public check_in_time: string
   @column()

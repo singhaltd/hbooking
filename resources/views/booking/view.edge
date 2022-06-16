@@ -200,7 +200,7 @@
                     <label class="label">
                       <span class="label-text">ວັນທີເຂົ້າ <abbr title="required">*</abbr></span>
                     </label>
-                    <input type="date" value="{{rsBook?.check_in_date.toFormat('yyyy-MM-dd')}}" name="check_in_date" class="input input-bordered w-full input-sm" disabled/>
+                    <input type="date" value="{{rsBook?.check_in_date}}" name="check_in_date" class="input input-bordered w-full input-sm" disabled/>
                     {{-- <label class="label">
                       <span class="label-text-alt">Alt label</span>
                     </label> --}}
@@ -220,7 +220,7 @@
                     <label class="label">
                       <span class="label-text">ວັນທີອອກ <abbr title="required">*</abbr></span>
                     </label>
-                    <input type="date" name="check_out_date" value="{{rsBook?.check_out_date.toFormat('yyyy-MM-dd')}}" class="input input-bordered w-full input-sm" disabled/>
+                    <input type="date" name="check_out_date" value="{{rsBook?.check_out_date}}" class="input input-bordered w-full input-sm" disabled/>
                     {{-- <label class="label">
                       <span class="label-text-alt">Alt label</span>
                     </label> --}}
@@ -382,14 +382,14 @@
        }
      }
      console.log(seleRoom)
-     await fetch(`/getSelectRoom?rooms=(${seleRoom.toString()})`).then(response => response.text()).then(res => {
+     await fetch(`/peot/getSelectRoom?rooms=(${seleRoom.toString()})`).then(response => response.text()).then(res => {
         document.getElementById('broomList').innerHTML = res
         var el = document.querySelectorAll('input[type=hidden][name="xroom"]');
         document.querySelectorAll('input[type=number][name="mtotal"]')[0].value = el[0].getAttribute('data-total')
       })
    })
    function statChange(bkid,ivid,stat){
-     fetch(`/api/booking/stat/${ivid}/${bkid}`,{
+     fetch(`/peot/api/booking/stat/${ivid}/${bkid}`,{
        method:'POST',
        headers: { 'Content-Type': 'application/json' },
        body:JSON.stringify({status:stat})
@@ -418,7 +418,7 @@
   function SaveRoom() {
     const data = document.roomfm
     var dataform = new FormData(data);
-    let url = '/v1/rooms';
+    let url = '/peot/v1/rooms';
     var xmlhr = new XMLHttpRequest();
     xmlhr.open("POST", url);
     xmlhr.send(dataform);
@@ -439,11 +439,11 @@
 
   async function changeHandler(event) {
     if (this.value === 'O') {
-      await fetch(`/getRoomState?status=O`).then(response => response.text()).then(res => {
+      await fetch(`/peot/getRoomState?status=O`).then(response => response.text()).then(res => {
         document.getElementById('tableRoomList').innerHTML = res
       })
     } else {
-      await fetch(`/getRoomState?status=`).then(response => response.text()).then(res => {
+      await fetch(`/peot/getRoomState?status=`).then(response => response.text()).then(res => {
         document.getElementById('tableRoomList').innerHTML = res
       })
     }
@@ -455,7 +455,7 @@
   let elp = document.getElementById('selProvince')
 
   async function getProvince(str) {
-    await fetch('/city/province/' + str).then(response => response.text()).then(res => {
+    await fetch('/peot/city/province/' + str).then(response => response.text()).then(res => {
       document.getElementById('selProvince').innerHTML = res
     })
   }
@@ -463,7 +463,7 @@
     getDistrict(elp.value)
   })
   async function getDistrict(str) {
-    await fetch('/city/district/' + str).then(response => response.text()).then(res => {
+    await fetch('/peot/city/district/' + str).then(response => response.text()).then(res => {
       document.getElementById('selDistrict').innerHTML = res
     })
   }

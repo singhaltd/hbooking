@@ -46,7 +46,7 @@
               <td>{{it.urole?.title}}</td>
               <td>
                 <div class="flex right-0">
-                  <a href="/users/v/{{it.id}}">
+                  <a href="/peot/users/v/{{it.id}}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                       stroke="currentColor" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round"
@@ -279,7 +279,7 @@
   function SaveUser() {
     const form = document.querySelector('#userForm');
     var dataform = new FormData(form);
-    fetch(`/v1/users`, { method: 'POST', body: dataform }).then((response) => response.json())
+    fetch(`/peot/v1/users`, { method: 'POST', body: dataform }).then((response) => response.json())
       .then((response) => {
         if(response.error== false){
           window.top.location = window.top.location
@@ -292,7 +292,7 @@
   let elp = document.getElementById('selProvince')
 
   async function getProvince(str) {
-    await fetch('/city/province/' + str).then(response => response.text()).then(res => {
+    await fetch('/peot/city/province/' + str).then(response => response.text()).then(res => {
       document.getElementById('selProvince').innerHTML = res
     })
   }
@@ -300,7 +300,7 @@
     getDistrict(elp.value)
   })
   async function getDistrict(str) {
-    await fetch('/city/district/' + str).then(response => response.text()).then(res => {
+    await fetch('/peot/city/district/' + str).then(response => response.text()).then(res => {
       document.getElementById('selDistrict').innerHTML = res
     })
   }

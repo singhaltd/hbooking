@@ -18,7 +18,7 @@
             ຄົ້ນຫາ
           </button>
         </form>
-        <a href="/booking/create" class="btn btn-sm">ເພີ່ມການຈອງ</a>
+        <a href="/peot/booking/create" class="btn btn-sm">ເພີ່ມການຈອງ</a>
       </div>
     </div>
     <div class="content">
@@ -46,14 +46,14 @@
             </tr>
             @each((it,i) in Booking)
             <tr>
-              <td><a href="/booking/v/{{it.ref_key}}">{{it.ref_key}}</a></td>
+              <td><a href="/peot/booking/v/{{it.ref_key}}">{{it.ref_key}}</a></td>
               <td>{{it.Cust?.fname}} {{it.Cust?.lname}}</td>
               <td>{{it.Cust?.email}}</td>
               <td>{{it.Cust?.mobile}}</td>
               <td>{{it.rqty}}</td>
-              <td>{{it.trn_date.toFormat('dd/MM/yyyy')}}</td>
-              <td>{{it.check_in_date.toFormat('dd/MM/yyyy')}} {{it.check_in_time}}</td>
-              <td>{{it.check_out_date.toFormat('dd/MM/yyyy')}} {{it.check_out_time}}</td>
+              <td>{{it.trn_date.toString()}}</td>
+              <td>{{it.check_in_date.toString()}} {{it.check_in_time}}</td>
+              <td>{{it.check_out_date.toString()}} {{it.check_out_time}}</td>
               <td>{{it.stat}}</td>
               <td>{{it.booktype}}</td>
               <td>{{it.invoice?.payt?.info}}</td>
@@ -65,7 +65,7 @@
                 </label>
                 <ul tabindex="0" class="dropdown-content menu menu-horizontal bg-base-100 rounded-box">
                   <li>
-                    <a href="/booking/v/{{it.ref_key}}">
+                    <a href="/peot/booking/v/{{it.ref_key}}">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
@@ -324,7 +324,7 @@
     }
   }
   function statChange(bkid,ivid,stat){
-     fetch(`/api/booking/stat/${ivid}/${bkid}`,{
+     fetch(`/peot/api/booking/stat/${ivid}/${bkid}`,{
        method:'POST',
        headers: { 'Content-Type': 'application/json' },
        body:JSON.stringify({status:stat})
@@ -335,7 +335,7 @@
   function SaveRoom() {
     const data = document.roomfm
     var dataform = new FormData(data);
-    let url = '/v1/rooms';
+    let url = '/peot/v1/rooms';
     var xmlhr = new XMLHttpRequest();
     xmlhr.open("POST", url);
     xmlhr.send(dataform);

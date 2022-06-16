@@ -123,7 +123,7 @@ export default class BookingsController {
                 })
                 await Database.rawQuery(`insert into booking_room(room_num,irate,book_ref,invoice) select number,price,'B${bookid}','I${ivid}' from rooms where number in (${xroom})`)
             }
-            response.redirect('/booking')
+            response.redirect('/peot/booking')
             // return customer
             // console.log(request.all())
         } catch (error) {

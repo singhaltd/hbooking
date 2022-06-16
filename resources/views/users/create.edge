@@ -38,7 +38,7 @@
     function SaveRoom() {
         const data = document.roomfm
         var dataform = new FormData(data);
-        let url = '/v1/rooms';
+        let url = '/peot/v1/rooms';
         var xmlhr = new XMLHttpRequest();
         xmlhr.open("POST", url);
         xmlhr.send(dataform);

@@ -24,7 +24,7 @@
   @!section('scripts')
 
   <script>
-  fetch('/v1/menu').then(response => response.text()).then(res => {
+  fetch('/peot/v1/menu').then(response => response.text()).then(res => {
     document.getElementById('asidebar').innerHTML = res
   })
     

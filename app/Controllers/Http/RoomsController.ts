@@ -91,7 +91,6 @@ export default class RoomsController {
     public async CrateRoomType({ request, response }) {
         const { rtype, description, name } = request.all()
         const images = request.files('imagefile')
-        console.log(images)
         try {
             const files = []
             if (images.length > 0) {
@@ -106,7 +105,7 @@ export default class RoomsController {
                 rtype, name, description
             })
             rsRoomType.related('thumbnail').createMany(files)
-            response.location('/rooms/type')
+            response.redirect('/peot/rooms/type')
             return response.json(rsRoomType)
         } catch (error) {
             console.log(error)
@@ -213,12 +212,12 @@ export default class RoomsController {
     }
     public async clFindType({ params, response }: HttpContextContract) {
         const RoomType = await MRoomType.query().preload('thumbnail').where('rtype', params.id).first()
-        const rPrice = await MRoom.query().select('price').where('rtype',`${RoomType?.rtid}`).firstOrFail()
+        const rPrice = await MRoom.query().select('price').where('rtype', `${RoomType?.rtid}`).firstOrFail()
         response.status(200)
         return {
-            error:false,
-            room:RoomType,
-            price:rPrice
+            error: false,
+            room: RoomType,
+            price: rPrice
         }
     }
 

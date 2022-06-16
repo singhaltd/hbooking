@@ -1,5 +1,5 @@
 import Route from '@ioc:Adonis/Core/Route'
-
+Route.group(()=> {
 Route.group(() => {
     Route.get('/', 'BookingsController.index').as('auth.booking')
     Route.get('v/:id', 'BookingsController.viewDetail')
@@ -27,3 +27,4 @@ Route.post('add-to-list', async ({ request, response }) => {
 
 Route.get('getRoomState', 'RoomsController.ListRoomForbook')
 Route.get('getSelectRoom', 'RoomsController.getSelectRoom')
+}).prefix('peot')
