@@ -10,6 +10,14 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
   Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
 }
 
+if (Encore.isProduction()) {
+  Encore.setPublicPath('https://127.0.0.1/assets')
+  Encore.setManifestKeyPrefix('assets/')
+} else {
+  Encore.setPublicPath('/assets')
+}
+
+
 /*
 |--------------------------------------------------------------------------
 | Output path
@@ -30,7 +38,7 @@ Encore.setOutputPath('./public/assets')
 | relative from the "public" directory.
 |
 */
-Encore.setPublicPath('/assets')
+// Encore.setPublicPath('/assets')
 
 /*
 |--------------------------------------------------------------------------

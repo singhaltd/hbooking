@@ -42,7 +42,7 @@ export default class AuthController {
         try {
             // await auth.attempt(username, password)
             await auth.use('web').attempt(username, password)
-            response.redirect('/')
+            response.redirect('/peot')
             // await AuthAttemptService.deleteBadAttempts(uid)
         } catch (error) {
             console.log(error)
