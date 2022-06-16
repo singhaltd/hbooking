@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
+import MCustomer from 'App/Models/MCustomer'
 import MMenu from 'App/Models/MMenu'
 import Muser from 'App/Models/Muser'
 import SignInValidator from 'App/Validators/SignInValidator'
@@ -57,14 +58,6 @@ export default class AuthController {
     }
     public async signinApi({ request, response, auth }: HttpContextContract) {
         const { username, password, remember_me } = request.all()
-        // const { username, password, remember_me } = await request.validate(SignInValidator)
-
-        // const loginAttemptsRemaining = await AuthAttemptService.getRemainingAttempts(username)
-        // if (loginAttemptsRemaining <= 0) {
-        //     session.flash('error', 'Your account has been locked due to repeated bad login attempts. Please reset your password.')
-        //     return response.redirect('/forgot-password')
-        // }
-
         try {
             // await auth.attempt(username, password)
             return await auth.use('api').attempt(username, password)
@@ -72,6 +65,40 @@ export default class AuthController {
         } catch (error) {
             console.log(error)
         }
+    }
+    public async profileApi({request,auth,response}:HttpContextContract){
+        const autUser = await auth.use('api').user
+        const user = await MCustomer.findOrFail(autUser?.istaff)
+        console.log(user)
+        return user
+        
+    }
+
+    public async registerApi({request,auth,response}:HttpContextContract){
+        const { fname,lname,username,password,email,mobile} = request.all()
+        const cust_no = Math.floor(1000 + Math.random() * 9000);
+        try {
+            const User = await Muser.firstOrCreate({username,email,mobile,},{fname,lname,username,email,mobile,password,istaff:cust_no,role:3})
+        if(User){
+            await MCustomer.updateOrCreate({
+                email,
+                mobile,
+                id:User?.istaff
+            },{
+                fname:User?.fname,
+                lname:User?.lname,
+                email:User?.email,
+                mobile:User?.mobile,
+                id:User?.istaff
+            })
+        }
+        return response.status(200).json({error:false,data:User})
+        } catch (error) {
+            return response.status(200).json({
+                error: true
+            })
+        }
+        
     }
 
 

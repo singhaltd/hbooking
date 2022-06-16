@@ -13,13 +13,9 @@ export default class MBooking extends BaseModel {
   public adulth: number
   @column()
   public child: number
-  @column.date({
-    serialize: (value) => value.toFormat('dd/MM/yyyy')
-  })
+  @column()
   public check_in_date: DateTime
-  @column.date({
-    serialize: (value) => value.toFormat('dd/MM/yyyy')
-  })
+  @column()
   public check_out_date: DateTime
   @column()
   public check_in_time: string
@@ -33,9 +29,9 @@ export default class MBooking extends BaseModel {
   public booktype: string
   @column()
   public rqty: number
-  @column.date({
-    serialize: (value) => value.toFormat('dd/MM/yyyy')
-  })
+  @column()
+  public room_type:string
+  @column()
   public trn_date: DateTime
 
   @column.dateTime({ autoCreate: true })

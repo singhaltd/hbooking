@@ -22,4 +22,8 @@ Route.group(() => {
 
 Route.group(() => {
     Route.post('/login', 'UsersController.mbilLogin')
+    Route.get('/profile', 'AuthController.profileApi').middleware('auth:api')
+    Route.post('/book', 'BookingsController.SeveBookingApi').middleware('auth:api')
+    Route.get('/history', 'BookingsController.historyApi').middleware('auth:api')
+    Route.post('/register', 'AuthController.registerApi')
 }).prefix('/api/v1')

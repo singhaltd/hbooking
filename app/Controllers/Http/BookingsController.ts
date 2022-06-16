@@ -134,6 +134,66 @@ export default class BookingsController {
 
     }
 
+    public async SeveBookingApi({ request, auth, response }: HttpContextContract) {
+        const { mtotal, pay_type } = request.all()
+        var ivid = Math.random().toString(16).substr(2, 8)
+        var bookid = Math.random().toString(16).substr(2, 8)
+        const user = await auth.use('api').user
+        const reqBooking = schema.create({
+            adulth: schema.number(),
+            child: schema.number(),
+            check_in_date: schema.string(),
+            check_out_date: schema.string(),
+            rqty: schema.number(),
+            room_type: schema.string(),
+        })
+        try {
+            const payBook = await request.validate({ schema: reqBooking })
+            // customer.related('booking').create(Object.assign(payBook, { maker: user?.id, trn_date: moment().format('yyyy-MM-DD'), ref_key: 'B' + bookid }))
+            const Book = await MBooking.create(Object.assign(payBook, { maker: user?.id, cust_id: user?.istaff, trn_date: moment().format('yyyy-MM-DD'), ref_key: 'B' + bookid, booktype: 'M' }))
+            if (Book) {
+                await Minvoice.create({
+                    ivid: 'I' + ivid,
+                    bookid: 'B' + bookid,
+                    total: mtotal,
+                    paid: 0,
+                    pay_type: pay_type,
+                    status: 'B',
+                    trn_date: moment().format('yyyy-MM-DD'),
+                    maker: user?.id
+                })
+            }
+            console.log(Book)
+            return response.status(200).json({
+                error: false,
+                data: Book
+            })
+        } catch (error) {
+            console.log(error)
+            // return response.redirect().back()
+        }
+
+
+    }
+
+    public async historyApi({ request, auth, response }: HttpContextContract) {
+        const user = await auth.use('api').user
+        try {
+            const Booking = await MBooking.query().preload('Cust').preload('invoice', (builder) => {
+                builder.preload('payt')
+            }).where('cust_id', user?.istaff)
+
+            response.status(200)
+            return {
+                error: false,
+                data: Booking
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     public async updateStat({ response, request, params, view }: HttpContextContract) {
         const { status } = request.all()
         console.log(status)

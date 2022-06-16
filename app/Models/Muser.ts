@@ -32,6 +32,8 @@ export default class Muser extends BaseModel {
   public role: number
   @column()
   public image:string
+  @column()
+  public istaff:number
   
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
