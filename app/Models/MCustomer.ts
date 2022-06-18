@@ -28,6 +28,8 @@ export default class MCustomer extends BaseModel {
   public sex:string
   @column()
   public status:string
+  @column()
+  public cover:string
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
