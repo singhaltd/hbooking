@@ -27,4 +27,4 @@ Route.group(() => {
     Route.get('/history', 'BookingsController.historyApi').middleware('auth:api')
     Route.post('/register', 'AuthController.registerApi')
 }).prefix('/api/v1')
-}).prefix('peot')
+}).prefix('/peot')
