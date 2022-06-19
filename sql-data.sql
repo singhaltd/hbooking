@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2022 at 07:12 AM
+-- Generation Time: Jun 19, 2022 at 11:37 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -95,21 +95,11 @@ CREATE TABLE `api_tokens` (
 --
 
 INSERT INTO `api_tokens` (`id`, `user_id`, `name`, `type`, `token`, `expires_at`, `created_at`) VALUES
-(8, 1, 'Opaque Access Token', 'api', '6d264b9db429f82e46a207f03504078869e7ffad67e887b3ecd11453f8767c31', NULL, '2022-05-21 13:53:06'),
-(9, 1, 'Opaque Access Token', 'api', '9079c1b82d1c1805caa8b36c9715c3417ab9f24904775adcd4c1134411304fca', NULL, '2022-06-14 19:32:13'),
-(10, 1, 'Opaque Access Token', 'api', '9c60d25f39ae9a689e44d41c4d1b25296cda5dbb98ffffe23c4e59eb35843fda', NULL, '2022-06-15 10:24:27'),
-(11, 1, 'Opaque Access Token', 'api', '75257d86cb308239d45ac36e671a0ce30c5c361cbca01cb8b1269debac09bff9', NULL, '2022-06-15 10:29:21'),
-(12, 1, 'Opaque Access Token', 'api', 'ad1f48c90b9d06112ff760efda387e0229ab227d6fbd8e059cf381674f411160', NULL, '2022-06-15 10:30:42'),
-(13, 1, 'Opaque Access Token', 'api', 'deef1f42147644f073ff7deee6b4bc8db004372d5f520a671bee2753b50724ee', NULL, '2022-06-15 10:31:26'),
-(14, 1, 'Opaque Access Token', 'api', '82ea3eac6f489d1cf3e92b8d4e3f9f0ea69b1c238e60d835c50bc931f75703f5', NULL, '2022-06-15 10:31:37'),
-(15, 1, 'Opaque Access Token', 'api', '5be4df284ea1e481f083de3625927e280ffc25abc0f0816c152cf6b4f67f7e26', NULL, '2022-06-15 10:32:00'),
-(16, 1, 'Opaque Access Token', 'api', '80527e34d77a9b87d45e2586f4a22b4021187880655c7119af3fcdcac02ef045', NULL, '2022-06-15 10:32:12'),
-(17, 1, 'Opaque Access Token', 'api', '4bc3d786a8014f24d09ba31ce7fb4e2f1c0a642e25afd51bcf122ac65a744afd', NULL, '2022-06-15 10:33:21'),
-(18, 56, 'Opaque Access Token', 'api', 'd051e50d2b5d09e33a48084fa5bd39e138c8e586fc1b6fd54065e2ee3b83369a', NULL, '2022-06-15 16:38:08'),
-(19, 1, 'Opaque Access Token', 'api', '6dd5fafa8c39f0195bea91ba1f7cde01e2d5f527e0fee86231e02fdd96f320c8', NULL, '2022-06-15 16:44:22'),
-(20, 56, 'Opaque Access Token', 'api', 'd7db6161358bdef2e942248559ce51f85d857342dc7bfa37e19de357f4b62c9c', NULL, '2022-06-15 16:45:15'),
-(21, 56, 'Opaque Access Token', 'api', '51c6ab428a838fe237cab88d8070f22d60db80a892565601bc689661a4961da3', NULL, '2022-06-16 01:06:50'),
-(22, 58, 'Opaque Access Token', 'api', 'a3f854e0b437cfa49c502ebe51c92ede1e872de7db8e1b73b28445d637815f08', NULL, '2022-06-17 01:27:30');
+(22, 58, 'Opaque Access Token', 'api', 'a3f854e0b437cfa49c502ebe51c92ede1e872de7db8e1b73b28445d637815f08', NULL, '2022-06-17 01:27:30'),
+(23, 58, 'Opaque Access Token', 'api', 'a94eb5d00be9b91efd011b42c3f9614c004652612f5569236479881fae2e4e07', NULL, '2022-06-19 02:37:53'),
+(24, 58, 'Opaque Access Token', 'api', 'c34ea8fc1178408c645f231d24d3e1fe22deb12c4b7ad2e464685dd5e98e408b', NULL, '2022-06-19 02:38:49'),
+(25, 58, 'Opaque Access Token', 'api', 'e60d80fa240bf06a6c262ef800ede46d9ef408ee35242b446c55a6c8cf73ee2c', NULL, '2022-06-19 03:06:39'),
+(26, 58, 'Opaque Access Token', 'api', 'dd7b4318108d66a4782a52f5276a8b8455982202cecfc24a7d8a3e00d2797725', NULL, '2022-06-19 03:50:56');
 
 -- --------------------------------------------------------
 
@@ -151,9 +141,10 @@ CREATE TABLE `bookings` (
 --
 
 INSERT INTO `bookings` (`ref_id`, `cust_id`, `adulth`, `child`, `room_type`, `check_in_date`, `check_out_date`, `check_in_time`, `check_out_time`, `maker`, `stat`, `booktype`, `rqty`, `trn_date`, `created_at`, `updated_at`) VALUES
-('B02bb9acd', 2836, 1, 0, 'UBC', '2022-06-17', '2022-06-17', NULL, NULL, 58, 'B', 'M', 1, '2022-06-17', '2022-06-17 02:02:06', '2022-06-17 02:02:06'),
-('B866f3b25', 1136, 1, 0, 'undef', '2022-06-16', '2022-06-16', NULL, NULL, 56, 'C', 'M', 1, '2022-06-16', '2022-06-16 01:13:24', '2022-06-16 01:13:24'),
-('Be3ba3031', 9821, 1, 0, NULL, '2022-06-16', '2022-06-16', '12:00:00', '12:00:00', 1, 'I', 'W', 1, '2022-06-16', '2022-06-16 06:26:35', '2022-06-16 06:26:35');
+('B6190d579', 2836, 1, 0, 'UBC', '2022-06-19', '2022-06-20', NULL, NULL, 58, 'C', 'M', 1, '2022-06-19', '2022-06-19 04:24:17', '2022-06-19 04:24:17'),
+('Ba1eb673e', 2836, 1, 0, 'UBC', '2022-06-19', '2022-06-20', NULL, NULL, 58, 'C', 'M', 8, '2022-06-19', '2022-06-19 04:24:50', '2022-06-19 04:24:50'),
+('Bb74e4c2d', 2836, 1, 0, 'UBC', '2022-06-19', '2022-06-20', NULL, NULL, 58, 'C', 'M', 1, '2022-06-19', '2022-06-19 04:34:44', '2022-06-19 04:34:44'),
+('Bf555012f', 2836, 1, 0, 'UBC', '2022-06-19', '2022-06-20', NULL, NULL, 58, 'B', 'M', 1, '2022-06-19', '2022-06-19 04:30:35', '2022-06-19 04:30:35');
 
 -- --------------------------------------------------------
 
@@ -224,17 +215,17 @@ CREATE TABLE `customers` (
   `sex` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `cover` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`cid`, `fname`, `lname`, `email`, `mobile`, `dob`, `district_id`, `village`, `doc_type`, `doc_no`, `sex`, `status`, `created_at`, `updated_at`) VALUES
-(1136, 'test', 'test', 'test@mail.com', '02055057246', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-06-15 16:37:29', '2022-06-15 16:37:29'),
-(2836, 'admin', 'admin', 'admin@mail.com', '55057246', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-06-16 15:34:20', '2022-06-16 15:34:20'),
-(9821, 'laithong', 'singhalat', 'laithong865@gmail.com', '02055057246', NULL, 101, 'test', 'PERSONAL_CARD', 'PA00012', 'M', NULL, '2022-06-16 06:26:35', '2022-06-16 06:26:35');
+INSERT INTO `customers` (`cid`, `fname`, `lname`, `email`, `mobile`, `dob`, `district_id`, `village`, `doc_type`, `doc_no`, `sex`, `status`, `created_at`, `updated_at`, `cover`) VALUES
+(2836, 'admin', 'admin', 'admin@mail.com', '55057246', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-06-16 15:34:20', '2022-06-16 15:34:20', ''),
+(5787, 'laithong', 'singhalat', 'laithong865@gmail.com', '02055057246', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-06-19 02:57:59', '2022-06-19 02:57:59', '');
 
 -- --------------------------------------------------------
 
@@ -460,9 +451,10 @@ CREATE TABLE `invoice` (
 --
 
 INSERT INTO `invoice` (`ivid`, `bookid`, `total`, `trn_date`, `status`, `created_at`, `updated_at`, `maker`, `paid`, `paid_type`) VALUES
-('I23430d86', 'B866f3b25', 0, '2022-06-16', 'C', '2022-06-16 01:13:24', '2022-06-16 01:13:24', 56, 0, 2),
-('I81d2034d', 'Be3ba3031', 120000, '2022-06-16', 'I', '2022-06-16 06:26:35', '2022-06-16 06:26:35', 1, 120000, 1),
-('Iac5cf97a', 'B02bb9acd', 0, '2022-06-17', 'B', '2022-06-17 02:02:06', '2022-06-17 02:02:06', 58, 0, 2);
+('I31c75d69', 'Bf555012f', 120000, '2022-06-19', 'B', '2022-06-19 04:30:35', '2022-06-19 04:30:35', 58, 0, 2),
+('I4dba147d', 'Bb74e4c2d', 120000, '2022-06-19', 'C', '2022-06-19 04:34:44', '2022-06-19 04:34:44', 58, 0, 2),
+('I814ac097', 'B6190d579', 120000, '2022-06-19', 'C', '2022-06-19 04:24:17', '2022-06-19 04:24:17', 58, 0, 2),
+('Ie104698e', 'Ba1eb673e', 960000, '2022-06-19', 'C', '2022-06-19 04:24:50', '2022-06-19 04:24:50', 58, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -729,10 +721,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `fname`, `lname`, `username`, `mobile`, `email`, `password`, `remember_me_token`, `created_at`, `updated_at`, `role`, `district`, `village`, `image`, `dob`, `sex`, `istaff`) VALUES
-(1, 'laithong', 'singhalat', 'dda7dd97', '55057246', 'thong@mail.com', '$argon2id$v=19$t=3,m=4096,p=1$mTPnm9BECrxZcpeDXxi3MQ$NF7dvpy9WiBTrVI8Ib+hOL04yJ4TPy/dzBnpeXtHkPI', NULL, '2022-05-21 11:35:25', '2022-05-21 11:35:25', 1, 0, '', '', NULL, '', 0),
-(56, 'test', 'test', 'c307b457', '02055057246', 'test@mail.com', '$argon2id$v=19$t=3,m=4096,p=1$cgA1/1g4PWPMPxcpXRLeSQ$dM+yKAPUxudKsNsdMSTw9f6TC/yYE8ySO9wGDm1/l9M', NULL, '2022-06-15 16:37:29', '2022-06-15 16:37:29', 3, 0, '', '', NULL, '', 1136),
-(57, 'test', 'xxx', 'x', '02055057246', 'thong@mail.com', '$argon2id$v=19$t=3,m=4096,p=1$ZfLHVjPEs0hHon4qhusxsA$S1vcTII90Fw1mTsxxSR5bUu5lxukZ2qjHzt+PVubk+w', NULL, '2022-06-16 06:39:22', '2022-06-16 06:39:22', 4, 101, 'x', '', '2022-06-15', 'F', 0),
-(58, 'admin', 'admin', 'admin', '55057246', 'admin@mail.com', '$bcrypt$v=98$r=10$d1I5ELIKNQ6eAlXhEbB2nA$emAazscet+2OGML9SxdMuaQqARcMx38', NULL, '2022-06-16 15:34:20', '2022-06-16 15:34:20', 1, 0, '', '', NULL, '', 2836);
+(58, 'admin', 'admin', 'admin', '55057246', 'admin@mail.com', '$bcrypt$v=98$r=10$d1I5ELIKNQ6eAlXhEbB2nA$emAazscet+2OGML9SxdMuaQqARcMx38', NULL, '2022-06-16 15:34:20', '2022-06-16 15:34:20', 1, 0, '', '', NULL, '', 2836),
+(64, 'laithong', 'singhalat', 'ef529284', '02055057246', 'laithong865@gmail.com', '$bcrypt$v=98$r=10$4s4uqbKEFhSkCYOSYMNqOw$kF5iFg118SKI/xL6Fd5PwUQ30C+tIII', NULL, '2022-06-19 02:57:59', '2022-06-19 02:57:59', 3, 0, '', '', NULL, '', 5787);
 
 -- --------------------------------------------------------
 
@@ -865,6 +855,9 @@ ALTER TABLE `countries`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`cid`),
+  ADD UNIQUE KEY `mobile` (`mobile`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `doc_no` (`doc_no`),
   ADD KEY `customers_district_id_foreign` (`district_id`);
 
 --
@@ -954,7 +947,10 @@ ALTER TABLE `room_types`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `mobile` (`mobile`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `user_roles`
@@ -983,7 +979,7 @@ ALTER TABLE `adonis_schema`
 -- AUTO_INCREMENT for table `api_tokens`
 --
 ALTER TABLE `api_tokens`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `auth_pages`
@@ -1055,7 +1051,7 @@ ALTER TABLE `room_facilities`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `user_roles`
