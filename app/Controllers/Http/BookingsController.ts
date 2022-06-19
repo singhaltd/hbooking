@@ -163,14 +163,15 @@ export default class BookingsController {
                     maker: user?.id
                 })
             }
-            console.log(Book)
             return response.status(200).json({
                 error: false,
                 data: Book
             })
         } catch (error) {
-            console.log(error)
-            // return response.redirect().back()
+            return response.badRequest({
+                error: true,
+                message: 'booking faild'
+            })
         }
 
 

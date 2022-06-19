@@ -1,6 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import MBooking from 'App/Models/MBooking'
 import MCountry from 'App/Models/MCountry'
 import MCustomer from 'App/Models/MCustomer'
+import Minvoice from 'App/Models/Minvoice'
 import MuRole from 'App/Models/MuRole'
 import Muser from 'App/Models/Muser'
 
@@ -80,9 +82,29 @@ export default class UsersController {
         try {
             const token = await auth.use('api').attempt(username, password)
             return token
-        } catch(e) {
-            console.log(e)
-            return response.badRequest('Invalid credentials')
+        } catch (e) {
+            return response.badRequest({
+                error: true,
+                message: 'login Faild'
+            })
         }
+    }
+
+    public async BookStatApi({ response, request, params }: HttpContextContract) {
+        const { status } = request.all()
+        try {
+            await Minvoice.query().where('ivid', params.ivid).update({ status: status }).first()
+            await MBooking.query().where('ref_key', params.bookid).update({ stat: status }).first()
+            return response.status(200).json({
+                error: false,
+                message: 'updated'
+            })
+        } catch (error) {
+            response.badRequest({
+                error: false,
+                message: 'updated'
+            })
+        }
+
     }
 }

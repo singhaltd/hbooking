@@ -10,8 +10,8 @@ export default class AuthController {
 
     public async dashboard({ view, auth, session }: HttpContextContract) {
         const room = await Database.rawQuery('select rs.scode,rs.name,IFNULL(r.amt,0) amt from room_statuses rs left join (select count(*) amt, status from rooms group by status) r on rs.scode = r.status')
-        return view.render('dashboard',{
-            room:room[0]
+        return view.render('dashboard', {
+            room: room[0]
         })
     }
     public async login({ view }: HttpContextContract) {
@@ -63,42 +63,46 @@ export default class AuthController {
             return await auth.use('api').attempt(username, password)
             // await AuthAttemptService.deleteBadAttempts(uid)
         } catch (error) {
-            console.log(error)
+            return response.status(201).json({
+                error: true,
+                message: 'login Faild'
+            })
         }
     }
-    public async profileApi({request,auth,response}:HttpContextContract){
+    public async profileApi({ request, auth, response }: HttpContextContract) {
         const autUser = await auth.use('api').user
         const user = await MCustomer.findOrFail(autUser?.istaff)
         console.log(user)
         return user
-        
+
     }
 
-    public async registerApi({request,auth,response}:HttpContextContract){
-        const { fname,lname,username,password,email,mobile} = request.all()
+    public async registerApi({ request, auth, response }: HttpContextContract) {
+        const { fname, lname, username, password, email, mobile } = request.all()
         const cust_no = Math.floor(1000 + Math.random() * 9000);
         try {
-            const User = await Muser.firstOrCreate({username,email,mobile,},{fname,lname,username,email,mobile,password,istaff:cust_no,role:3})
-        if(User){
-            await MCustomer.updateOrCreate({
-                email,
-                mobile,
-                id:User?.istaff
-            },{
-                fname:User?.fname,
-                lname:User?.lname,
-                email:User?.email,
-                mobile:User?.mobile,
-                id:User?.istaff
-            })
-        }
-        return response.status(200).json({error:false,data:User})
+            const User = await Muser.firstOrCreate({ username, email, mobile, }, { fname, lname, username, email, mobile, password, istaff: cust_no, role: 3 })
+            if (User) {
+                await MCustomer.updateOrCreate({
+                    email,
+                    mobile,
+                    id: User?.istaff
+                }, {
+                    fname: User?.fname,
+                    lname: User?.lname,
+                    email: User?.email,
+                    mobile: User?.mobile,
+                    id: User?.istaff
+                })
+            }
+            return response.status(200).json({ error: false, data: User })
         } catch (error) {
-            return response.status(200).json({
-                error: true
+            return response.badRequest({
+                error: true,
+                message: 'ຂໍ້ມູນນີ້ມີໃນລະບົບຢູ່ແລ້ວ'
             })
         }
-        
+
     }
 
 
