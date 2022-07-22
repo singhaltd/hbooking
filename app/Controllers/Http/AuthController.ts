@@ -26,7 +26,7 @@ export default class AuthController {
         const user = await Muser.create(request.all())
         await auth.login(user)
         session.flash({ notification: "Logged in successfully" });
-        return response.redirect('/')
+        return response.redirect('/peot')
     }
 
     public async signin({ request, response, auth, session }: HttpContextContract) {
@@ -54,7 +54,7 @@ export default class AuthController {
 
         session.flash('success', 'Welcome back!')
 
-        return response.redirect('/')
+        return response.redirect('/peot')
     }
     public async signinApi({ request, response, auth }: HttpContextContract) {
         const { username, password, remember_me } = request.all()
@@ -111,7 +111,7 @@ export default class AuthController {
 
         session.flash('success', 'You have been logged out')
 
-        return response.redirect('/')
+        return response.redirect('/peot')
     }
     /// api
 

@@ -11,8 +11,8 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 if (Encore.isProduction()) {
-  Encore.setPublicPath('https://127.0.0.1/assets')
-  Encore.setManifestKeyPrefix('assets/')
+  Encore.setPublicPath('/xass/assets/')
+  Encore.setManifestKeyPrefix('/xass/assets/')
 } else {
   Encore.setPublicPath('/assets')
 }

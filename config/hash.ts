@@ -27,7 +27,7 @@ export default hashConfig({
   | free to change the default value
   |
   */
-  default: Env.get('HASH_DRIVER', 'argon'),
+  default: Env.get('HASH_DRIVER', 'plainText'),
 
   list: {
     /*
@@ -50,6 +50,9 @@ export default hashConfig({
       memory: 4096,
       parallelism: 1,
       saltSize: 16,
+    },
+    painhash: {
+      driver: 'plainText',
     },
 
     /*
